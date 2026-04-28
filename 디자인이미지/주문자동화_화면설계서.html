@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WEGO 2.0 - 주문자동화 화면설계서 v0.1</title>
+<style>
+  :root{
+    --primary:#1B7AB5;
+    --primary-dark:#11547F;
+    --accent:#00C6B7;
+    --bg:#F5F7FA;
+    --panel:#FFFFFF;
+    --line:#E2E8F0;
+    --text:#1F2937;
+    --muted:#6B7280;
+    --warning:#F59E0B;
+    --danger:#EF4444;
+    --success:#10B981;
+    --info:#3B82F6;
+    --chip:#EEF2FF;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:#EAEEF3;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    color:var(--text);
+    line-height:1.5;
+    padding:32px 24px 80px;
+  }
+  /* 문서 헤더 */
+  .doc-header{
+    max-width:1320px;margin:0 auto 28px;background:linear-gradient(135deg,var(--primary),#0E3F62);
+    color:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 8px 24px rgba(15,76,129,.15);
+  }
+  .doc-header h1{margin:0 0 8px;font-size:26px;letter-spacing:-.5px}
+  .doc-header p{margin:0;opacity:.92;font-size:14px}
+  .doc-meta{display:flex;gap:24px;margin-top:14px;font-size:13px;opacity:.92}
+  .doc-meta b{font-weight:600}
+  /* 섹션 */
+  .section{max-width:1320px;margin:0 auto 40px}
+  .section-title{
+    display:flex;align-items:center;gap:12px;margin:0 0 16px;
+    font-size:18px;color:var(--primary-dark);
+  }
+  .section-title .num{
+    background:var(--primary);color:#fff;width:30px;height:30px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
+  }
+  .section-desc{font-size:13px;color:var(--muted);margin:-8px 0 16px 42px}
+  /* 카드(화면) */
+  .screen{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.04);
+    display:grid;grid-template-columns: 1fr 320px;
+  }
+  .screen .scr-body{padding:18px 20px;border-right:1px solid var(--line);min-height:420px}
+  .screen .scr-meta{padding:18px 18px;background:#FAFBFC}
+  .scr-tag{
+    display:inline-block;font-size:11px;background:var(--chip);color:var(--primary-dark);
+    padding:3px 8px;border-radius:6px;margin-right:6px;font-weight:600;letter-spacing:.2px;
+  }
+  .scr-id{font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:.5px}
+  .scr-title{font-size:18px;font-weight:700;margin:0 0 6px}
+  .scr-summary{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .meta-h{font-size:12px;color:var(--primary-dark);font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.6px}
+  .meta-list{margin:0;padding-left:16px;font-size:12.5px;color:#374151}
+  .meta-list li{margin-bottom:4px}
+  .req-chip{display:inline-block;font-size:10.5px;background:#F1F5F9;color:#0F172A;padding:2px 6px;border-radius:4px;margin:2px 4px 2px 0;border:1px solid #E2E8F0;font-weight:600}
+
+  /* ===== 공통 윈도우 컴포넌트 ===== */
+  .win{
+    border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;
+  }
+  .win-bar{
+    display:flex;align-items:center;background:#F8FAFC;border-bottom:1px solid var(--line);
+    padding:8px 12px;font-size:12px;color:var(--muted);
+  }
+  .win-bar .dots{display:flex;gap:5px;margin-right:10px}
+  .win-bar .dots i{width:9px;height:9px;border-radius:50%;background:#E2E8F0;display:inline-block}
+  .win-bar .url{flex:1;text-align:center;background:#fff;border:1px solid var(--line);border-radius:5px;padding:3px 8px;color:#475569}
+  .win-body{padding:14px}
+
+  /* ===== Top Nav (안 화면 공통) ===== */
+  .topnav{
+    display:flex;align-items:center;background:var(--primary);color:#fff;border-radius:8px 8px 0 0;
+    padding:0 14px;height:42px;font-size:13px;
+  }
+  .logo{font-weight:800;letter-spacing:1px;margin-right:24px}
+  .topnav nav{display:flex;gap:18px;flex:1}
+  .topnav nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:6px 8px;border-radius:6px}
+  .topnav nav a.on{background:rgba(255,255,255,.18);color:#fff;font-weight:600}
+  .topnav .me{font-size:12px;opacity:.9}
+
+  /* ===== Layout: side + main ===== */
+  .ws{display:grid;grid-template-columns:180px 1fr;background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;min-height:520px}
+  .ws .side{border-right:1px solid var(--line);padding:14px 8px;background:#FAFBFC;font-size:12.5px}
+  .ws .side h5{margin:14px 6px 6px;color:var(--muted);font-size:11px;letter-spacing:.6px}
+  .ws .side a{display:block;padding:7px 10px;color:#334155;text-decoration:none;border-radius:6px}
+  .ws .side a.on{background:#E0F2FE;color:var(--primary-dark);font-weight:700}
+  .ws .side a:hover{background:#F1F5F9}
+  .ws .main{padding:16px 18px}
+
+  /* ===== 컴포넌트 ===== */
+  .page-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .page-h h2{margin:0;font-size:16px}
+  .page-h .tools{display:flex;gap:6px}
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;border-radius:6px;padding:6px 12px;border:1px solid var(--line);background:#fff;color:#334155;cursor:pointer}
+  .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .btn.accent{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.ghost{background:transparent}
+  .btn.warn{background:var(--warning);color:#fff;border-color:var(--warning)}
+
+  /* KPI cards */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .kpi .lbl{font-size:11.5px;color:var(--muted)}
+  .kpi .val{font-size:22px;font-weight:800;color:var(--primary-dark);margin-top:2px}
+  .kpi .delta{font-size:11px;color:var(--success);font-weight:600}
+  .kpi .delta.down{color:var(--danger)}
+
+  /* Tabs */
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:10px}
+  .tabs .t{padding:8px 12px;font-size:12.5px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer}
+  .tabs .t.on{color:var(--primary-dark);border-color:var(--primary);font-weight:700}
+
+  /* Filter bar */
+  .filterbar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .filterbar .sel{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff;color:#334155}
+  .filterbar .search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:6px;padding:5px 10px;font-size:12px}
+
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:middle}
+  th{background:#F1F5F9;color:#334155;font-weight:700;font-size:11.5px}
+  tr.urgent{background:#FEF2F2}
+  tr.attention{background:#FFFBEB}
+  tr.normal{}
+  tr.hold{background:#F1F5F9;color:#94A3B8}
+  .badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:999px;font-weight:700}
+  .badge.danger{background:#FEE2E2;color:#B91C1C}
+  .badge.warn{background:#FEF3C7;color:#92400E}
+  .badge.ok{background:#D1FAE5;color:#065F46}
+  .badge.info{background:#DBEAFE;color:#1E40AF}
+  .badge.gray{background:#E5E7EB;color:#374151}
+
+  /* Gauge bar */
+  .gauge{display:flex;align-items:center;gap:6px}
+  .gauge .bar{flex:1;height:8px;background:#E5E7EB;border-radius:4px;overflow:hidden;position:relative;min-width:90px}
+  .gauge .bar i{display:block;height:100%;border-radius:4px}
+  .gauge .bar i.lvl-d{background:linear-gradient(90deg,#EF4444,#F97316)}
+  .gauge .bar i.lvl-w{background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+  .gauge .bar i.lvl-o{background:linear-gradient(90deg,#10B981,#34D399)}
+  .gauge .bar .th{position:absolute;top:-3px;width:2px;height:14px;background:#0F172A;}
+  .gauge .pct{font-size:11px;font-weight:700;width:36px;text-align:right}
+
+  /* Order recommendation card */
+  .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .rec{
+    border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .rec.h{border-color:#FCA5A5;background:#FEF2F2}
+  .rec.m{border-color:#FCD34D;background:#FFFBEB}
+  .rec .row{display:flex;align-items:center;justify-content:space-between}
+  .rec .name{font-weight:700;font-size:13px}
+  .rec .meta{font-size:11.5px;color:var(--muted)}
+  .rec .num{font-size:11px}
+  .rec .cta{display:flex;gap:6px;margin-top:6px}
+
+  /* Chart placeholder */
+  .chart{
+    background:repeating-linear-gradient(180deg,#F8FAFC 0 24px,#fff 24px 25px);
+    border:1px dashed var(--line);border-radius:8px;height:160px;position:relative;overflow:hidden;
+  }
+  .chart svg{position:absolute;inset:0;width:100%;height:100%}
+  .chart-legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin-top:6px}
+  .chart-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+  /* Tank visual */
+  .tank{display:flex;gap:14px;align-items:flex-end}
+  .tank .t{
+    width:48px;height:90px;border:2px solid #94A3B8;border-radius:6px;background:#F1F5F9;position:relative;overflow:hidden;
+  }
+  .tank .t i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#60A5FA,#1E40AF);transition:.3s}
+  .tank .t .pct{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:10px;font-weight:700;color:#0F172A}
+  .tank .lbl{font-size:11px;color:var(--muted);text-align:center;margin-top:4px}
+
+  /* Notification */
+  .alerts{display:flex;flex-direction:column;gap:8px}
+  .alert{
+    border-left:4px solid var(--danger);background:#FEF2F2;padding:8px 10px;border-radius:6px;font-size:12px;
+  }
+  .alert.warn{border-color:var(--warning);background:#FFFBEB}
+  .alert.info{border-color:var(--info);background:#EFF6FF}
+  .alert b{font-weight:700}
+
+  /* Mobile mockup */
+  .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .phone{
+    background:#0F172A;border-radius:28px;padding:10px;
+    box-shadow:inset 0 0 0 6px #0F172A,0 6px 18px rgba(0,0,0,.18);
+  }
+  .phone .scr{background:#F4F6FA;border-radius:18px;height:540px;overflow:hidden;display:flex;flex-direction:column}
+  .phone .ph{background:var(--primary);color:#fff;padding:10px 14px;font-size:13px;display:flex;align-items:center;justify-content:space-between}
+  .phone .pb{padding:10px;flex:1;overflow:auto;font-size:12px}
+  .phone .pn{display:flex;border-top:1px solid var(--line);background:#fff;padding:8px}
+  .phone .pn .b{flex:1;text-align:center;padding:8px 0;font-size:11px;border-radius:8px;margin:0 4px}
+  .phone .pn .b.on{background:var(--primary);color:#fff}
+  .phone .pn .b.alt{background:#E0F2FE;color:var(--primary-dark)}
+  .item{background:#fff;border-radius:8px;padding:10px;margin-bottom:8px;border:1px solid var(--line)}
+  .item .nm{font-weight:700;font-size:12.5px;display:flex;justify-content:space-between}
+  .item .ln{font-size:11px;color:var(--muted);margin-top:3px}
+  .item.urgent{border-color:#FCA5A5;background:#FEF2F2}
+  .item.warn{border-color:#FCD34D;background:#FFFBEB}
+
+  /* Flow callouts */
+  .callout{background:#FFFBEB;border:1px dashed #F59E0B;color:#92400E;padding:10px 12px;border-radius:8px;font-size:12px;margin-top:10px}
+  .callout b{color:#78350F}
+
+  /* Two cols for some screens */
+  .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+
+  /* Footer of doc */
+  .doc-footer{max-width:1320px;margin:30px auto 0;text-align:center;color:#94A3B8;font-size:12px}
+
+  .legend-row{display:flex;gap:14px;font-size:11.5px;color:var(--muted);margin:6px 0 0}
+  .legend-row span{display:inline-flex;align-items:center;gap:5px}
+  .legend-row .dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+  /* Status flag */
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:2px 7px;border-radius:999px;background:#F1F5F9;color:#334155;font-weight:600}
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:#94A3B8;display:inline-block}
+  .pill.ok::before{background:var(--success)}
+  .pill.warn::before{background:var(--warning)}
+  .pill.danger::before{background:var(--danger)}
+  .pill.info::before{background:var(--info)}
+
+  .stack{display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <h1>WEGO 2.0 · 주문자동화 화면설계서 (v0.1)</h1>
+  <p>AS-IS 수기 중심 주문 운영을 AI 추천 기반 자동화로 전환하기 위한 핵심 화면 정의서</p>
+  <div class="doc-meta">
+    <span><b>대상</b> 성림에너지 Pilot (원곡·평택·안산)</span>
+    <span><b>사용자</b> 충전소 담당자(소장)·기사·운영관리자</span>
+    <span><b>요구사항 매핑</b> SKBS_AMO_RQ_01 ~ 09</span>
+    <span><b>작성일</b> 2026-04-28</span>
+  </div>
+</header>
+
+<!-- ============================================================
+     0. 화면 흐름 / IA
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">0</span> 정보구조(IA) & 화면 흐름</h2>
+  <p class="section-desc">주문자동화 To-Be 5단계(수요처 SB → AI 분석 → WEGO 시스템 → 충전소 담당자 확정 → 기사 확인)를 화면으로 구현</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr / 화면 흐름</div></div>
+        <div class="win-body" style="padding:18px">
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px">
+            <div style="text-align:center">
+              <div style="border:2px solid var(--primary);border-radius:10px;padding:10px;background:#EFF6FF">
+                <div style="font-size:22px">📡</div>
+                <div style="font-weight:700;font-size:13px;margin-top:4px">① 수요처 SB</div>
+                <div style="font-size:11px;color:var(--muted)">스마트미터 잔량 자동수신</div>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="border:2px solid var(--accent);border-radius:10px;padding:10px;background:#ECFDF5">
+                <div style="font-size:22px">🧠</div>
+                <div style="font-weight:700;font-size:13px;margin-top:4px">② AI Data 분석</div>
+                <div style="font-size:11px;color:var(--muted)">예측·안전재고·추천</div>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="border:2px solid var(--primary);border-radius:10px;padding:10px;background:#EFF6FF">
+                <div style="font-size:22px">🖥️</div>
+                <div style="font-weight:700;font-size:13px;margin-top:4px">③ WEGO 시스템</div>
+                <div style="font-size:11px;color:var(--muted)">주문 List 자동 생성</div>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="border:2px solid var(--primary);border-radius:10px;padding:10px;background:#EFF6FF">
+                <div style="font-size:22px">👤</div>
+                <div style="font-weight:700;font-size:13px;margin-top:4px">④ 담당자 확정</div>
+                <div style="font-size:11px;color:var(--muted)">원클릭 + 예외 보류</div>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="border:2px solid var(--primary);border-radius:10px;padding:10px;background:#EFF6FF">
+                <div style="font-size:22px">🚛</div>
+                <div style="font-weight:700;font-size:13px;margin-top:4px">⑤ 기사 확인</div>
+                <div style="font-size:11px;color:var(--muted)">배차·납품·정산</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+            <div>
+              <div class="meta-h">메뉴 트리(GNB)</div>
+              <ul class="meta-list" style="font-size:12.5px">
+                <li><b>대시보드</b> – 오늘의 KPI/추천/알림</li>
+                <li><b>주문관리</b> – 추천주문 List · 주문확정 · 주문이력</li>
+                <li><b>수요처관리</b> – 수요처 List · 수요처 상세(예측/안전재고)</li>
+                <li><b>모니터링</b> – 스마트미터 현황 · 센서 이상 알림 · 사용상태</li>
+                <li><b>분석/KPI</b> – 적중률 · 자동화 커버리지 · 수송효율</li>
+                <li><b>설정</b> – 안전재고 정책 · 군집/모델 · 알림 · 권한</li>
+              </ul>
+            </div>
+            <div>
+              <div class="meta-h">화면 매핑(이번 설계 범위)</div>
+              <ul class="meta-list" style="font-size:12.5px">
+                <li><b>M01</b> 메인 대시보드(소장 홈)</li>
+                <li><b>M02</b> 추천주문 List & 원클릭 확정</li>
+                <li><b>M03</b> 주문 카드 상세 (보류·제외 사유 처리)</li>
+                <li><b>M04</b> 수요처 상세 (잔량 예측/안전재고)</li>
+                <li><b>M05</b> 스마트미터 모니터링 (센서 오류/사용상태)</li>
+                <li><b>M06</b> KPI 대시보드 (적중률/자동화율)</li>
+                <li><b>M07</b> 모바일 주문 신청 (개선)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">DOC · IA</div>
+      <div class="scr-title">화면 흐름</div>
+      <div class="scr-summary">5단계 To-Be 프로세스 → 7개 핵심 화면으로 구현</div>
+      <div class="meta-h">설계 원칙</div>
+      <ul class="meta-list">
+        <li>알림 1개로 출근, 원클릭 주문</li>
+        <li>예외(보류·휴업·누락)만 손이 가도록</li>
+        <li>판단 근거(잔량·예측·안전재고) 항상 노출</li>
+        <li>모바일/PC 동기화, 야간·주말 단순화</li>
+      </ul>
+      <div class="meta-h">사용자(Persona)</div>
+      <ul class="meta-list">
+        <li>충전소 소장(김소장) – 주문 확정 권한</li>
+        <li>운영관리자 – 정책·KPI 모니터링</li>
+        <li>기사 – 배차·납품 확인</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M01. 메인 대시보드
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">1</span> M01 · 메인 대시보드 (소장 홈)</h2>
+  <p class="section-desc">출근 직후 한 화면에서 “오늘 무엇을 결정해야 하는가” 파악</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/dashboard</div></div>
+        <div class="win-body" style="padding:0">
+          <div class="topnav">
+            <div class="logo">WEGO 2.0</div>
+            <nav>
+              <a href="#" class="on">대시보드</a>
+              <a href="#">주문관리</a>
+              <a href="#">수요처관리</a>
+              <a href="#">모니터링</a>
+              <a href="#">분석/KPI</a>
+              <a href="#">설정</a>
+            </nav>
+            <div class="me">원곡 충전소 / 김소장 ▾</div>
+          </div>
+
+          <div class="ws">
+            <aside class="side">
+              <h5>오늘</h5>
+              <a href="#" class="on">홈</a>
+              <a href="#">추천주문 (12)</a>
+              <a href="#">알림 (3)</a>
+              <h5>업무</h5>
+              <a href="#">주문확정</a>
+              <a href="#">수요처</a>
+              <a href="#">스마트미터</a>
+              <h5>분석</h5>
+              <a href="#">KPI</a>
+              <a href="#">자동화율</a>
+            </aside>
+            <main class="main">
+              <div class="page-h">
+                <h2>오늘의 추천 (2026-04-28 / 원곡 충전소)</h2>
+                <div class="tools">
+                  <button class="btn ghost">⟳ 새로고침 (08:12 기준)</button>
+                  <button class="btn primary">+ 일괄 확정</button>
+                </div>
+              </div>
+
+              <div class="kpis">
+                <div class="kpi"><div class="lbl">추천 주문</div><div class="val">12건</div><div class="delta">▲ 어제 대비 +2</div></div>
+                <div class="kpi"><div class="lbl">긴급(잔량 &lt;20%)</div><div class="val" style="color:var(--danger)">3건</div><div class="delta down">즉시 확인 필요</div></div>
+                <div class="kpi"><div class="lbl">예상 출고량</div><div class="val">42.8 t</div><div class="delta">차량 4대</div></div>
+                <div class="kpi"><div class="lbl">자동화 커버리지</div><div class="val" style="color:var(--success)">92.5%</div><div class="delta">▲ +1.2%p</div></div>
+              </div>
+
+              <div class="two-col">
+                <div class="win" style="border:none;background:transparent">
+                  <div class="meta-h" style="margin:0 0 6px">추천 주문 (우선순위 Top 6)</div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width:36px"><input type="checkbox" /></th>
+                        <th>수요처</th>
+                        <th>잔량</th>
+                        <th>예상 소진</th>
+                        <th>권장량</th>
+                        <th>상태</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="urgent">
+                        <td><input type="checkbox" checked /></td>
+                        <td><b>안ㅇㅇ식품</b><div class="num" style="font-size:11px;color:var(--muted)">산업용·체적</div></td>
+                        <td><div class="gauge"><span class="pct" style="color:var(--danger)">8%</span><div class="bar"><i class="lvl-d" style="width:8%"></i><span class="th" style="left:15%"></span></div></div></td>
+                        <td>D+0 14:00</td>
+                        <td><b>850 kg</b></td>
+                        <td><span class="badge danger">긴급</span></td>
+                        <td><button class="btn primary">확정</button></td>
+                      </tr>
+                      <tr class="urgent">
+                        <td><input type="checkbox" checked /></td>
+                        <td><b>동ㅇㅇ공장</b><div class="num" style="font-size:11px;color:var(--muted)">산업용·체적</div></td>
+                        <td><div class="gauge"><span class="pct" style="color:var(--danger)">12%</span><div class="bar"><i class="lvl-d" style="width:12%"></i><span class="th" style="left:15%"></span></div></div></td>
+                        <td>D+1 09:00</td>
+                        <td><b>1,240 kg</b></td>
+                        <td><span class="badge danger">긴급</span></td>
+                        <td><button class="btn primary">확정</button></td>
+                      </tr>
+                      <tr class="attention">
+                        <td><input type="checkbox" checked /></td>
+                        <td><b>양ㅇ산업</b><div class="num" style="font-size:11px;color:var(--muted)">상업용</div></td>
+                        <td><div class="gauge"><span class="pct" style="color:var(--warning)">22%</span><div class="bar"><i class="lvl-w" style="width:22%"></i><span class="th" style="left:18%"></span></div></div></td>
+                        <td>D+1 16:00</td>
+                        <td><b>640 kg</b></td>
+                        <td><span class="badge warn">주의</span></td>
+                        <td><button class="btn primary">확정</button></td>
+                      </tr>
+                      <tr class="normal">
+                        <td><input type="checkbox" /></td>
+                        <td><b>한ㅇ가스</b><div class="num" style="font-size:11px;color:var(--muted)">산업용</div></td>
+                        <td><div class="gauge"><span class="pct">31%</span><div class="bar"><i class="lvl-o" style="width:31%"></i><span class="th" style="left:20%"></span></div></div></td>
+                        <td>D+2 11:00</td>
+                        <td>520 kg</td>
+                        <td><span class="badge ok">정상</span></td>
+                        <td><button class="btn">확정</button></td>
+                      </tr>
+                      <tr class="hold">
+                        <td><input type="checkbox" /></td>
+                        <td><b>OO펄프</b><div class="num" style="font-size:11px;color:#94A3B8">휴업 추정 (사용 0kg/3일)</div></td>
+                        <td><div class="gauge"><span class="pct">61%</span><div class="bar"><i class="lvl-o" style="width:61%"></i></div></div></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="badge gray">보류·휴업</span></td>
+                        <td><button class="btn ghost">사유 확인</button></td>
+                      </tr>
+                      <tr class="normal">
+                        <td><input type="checkbox" /></td>
+                        <td><b>경ㅇ상회</b><div class="num" style="font-size:11px;color:var(--muted)">상업용</div></td>
+                        <td><div class="gauge"><span class="pct">28%</span><div class="bar"><i class="lvl-w" style="width:28%"></i><span class="th" style="left:20%"></span></div></div></td>
+                        <td>D+2 13:00</td>
+                        <td>320 kg</td>
+                        <td><span class="badge ok">정상</span></td>
+                        <td><button class="btn">확정</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="legend-row">
+                    <span><i class="dot" style="background:#F87171"></i>긴급(잔량&lt;20%)</span>
+                    <span><i class="dot" style="background:#FBBF24"></i>주의(20~30%)</span>
+                    <span><i class="dot" style="background:#34D399"></i>정상</span>
+                    <span><i class="dot" style="background:#0F172A;width:2px"></i>안전재고 임계값</span>
+                  </div>
+                </div>
+
+                <div class="stack">
+                  <div class="win" style="padding:0">
+                    <div class="win-body">
+                      <div class="meta-h" style="margin:0 0 8px">알림 / 예외 처리 (3)</div>
+                      <div class="alerts">
+                        <div class="alert"><b>[센서 이상]</b> 동ㅇㅇ공장 #2 — 납품 중인데 잔량 무변동 <button class="btn ghost" style="float:right;padding:2px 6px">확인</button></div>
+                        <div class="alert warn"><b>[휴업 추정]</b> OO펄프 — 3일 연속 사용 0kg <button class="btn ghost" style="float:right;padding:2px 6px">상태 변경</button></div>
+                        <div class="alert info"><b>[배차부하]</b> D+1 가용 12t × 4대, 대기 5건 → 시점 후행 조정 권장</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="win">
+                    <div class="win-body">
+                      <div class="meta-h" style="margin:0 0 6px">충전소 S/B 재고 현황</div>
+                      <div class="tank">
+                        <div>
+                          <div class="t"><span class="pct">61%</span><i style="height:61%"></i></div>
+                          <div class="lbl">S/B 1<br>588 kg</div>
+                        </div>
+                        <div>
+                          <div class="t"><span class="pct">82%</span><i style="height:82%"></i></div>
+                          <div class="lbl">S/B 2<br>1,668 kg</div>
+                        </div>
+                        <div>
+                          <div class="t"><span class="pct">94%</span><i style="height:94%"></i></div>
+                          <div class="lbl">충전소<br>7,936 kg</div>
+                        </div>
+                        <div style="flex:1;margin-left:10px">
+                          <div class="legend-row" style="flex-direction:column;gap:6px">
+                            <span><i class="dot" style="background:#10B981"></i>충전 가용</span>
+                            <span><i class="dot" style="background:#F59E0B"></i>오늘 출고 예정 42.8t</span>
+                            <span><i class="dot" style="background:#EF4444"></i>긴급 라인 가동 1건</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="win">
+                    <div class="win-body">
+                      <div class="meta-h" style="margin:0 0 6px">오늘 배차 부하</div>
+                      <div class="chart">
+                        <svg viewBox="0 0 300 120" preserveAspectRatio="none">
+                          <polyline fill="none" stroke="#1B7AB5" stroke-width="2" points="0,90 30,72 60,80 90,55 120,40 150,52 180,30 210,46 240,60 270,45 300,52" />
+                          <polyline fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4 3" points="0,60 30,60 60,60 90,60 120,60 150,60 180,60 210,60 240,60 270,60 300,60" />
+                        </svg>
+                      </div>
+                      <div class="chart-legend"><span><i style="background:#1B7AB5"></i>예상 출고(시간대)</span><span><i style="background:#F59E0B"></i>가용 CAPA</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M01 · DASHBOARD</div>
+      <div class="scr-title">메인 대시보드</div>
+      <div class="scr-summary">소장이 출근하자마자 보는 “오늘 한 페이지”</div>
+      <div class="meta-h">주요 컴포넌트</div>
+      <ul class="meta-list">
+        <li>오늘의 KPI 4종 (추천/긴급/예상출고/자동화율)</li>
+        <li>추천주문 Top N 테이블 + 일괄 확정</li>
+        <li>알림/예외 카드 (센서·휴업·배차부하)</li>
+        <li>S/B 재고 게이지 + 가용 CAPA 그래프</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_03 리드타임 잔량</span>
+        <span class="req-chip">RQ_04 안전재고</span>
+        <span class="req-chip">RQ_06 동적 시점조정</span>
+        <span class="req-chip">RQ_07 센서이상</span>
+        <span class="req-chip">RQ_08 사용상태</span>
+        <span class="req-chip">RQ_09 KPI</span>
+      </div>
+      <div class="meta-h">상호작용</div>
+      <ul class="meta-list">
+        <li>체크 후 [일괄 확정] → M03 확정 모달</li>
+        <li>예외 카드 → M03 보류/사유 처리</li>
+        <li>가용 CAPA 초과 시 시점 후행 조정 안내</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M02. 추천주문 List
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">2</span> M02 · 추천주문 List & 원클릭 확정</h2>
+  <p class="section-desc">AI가 산출한 주문 후보를 충전소 단위/거래처 단위로 필터링·검토·확정</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/orders/recommend</div></div>
+        <div class="win-body" style="padding:0">
+          <div class="topnav">
+            <div class="logo">WEGO 2.0</div>
+            <nav>
+              <a href="#">대시보드</a>
+              <a href="#" class="on">주문관리</a>
+              <a href="#">수요처관리</a>
+              <a href="#">모니터링</a>
+              <a href="#">분석/KPI</a>
+              <a href="#">설정</a>
+            </nav>
+            <div class="me">원곡 충전소 / 김소장 ▾</div>
+          </div>
+          <div class="ws">
+            <aside class="side">
+              <h5>주문관리</h5>
+              <a href="#" class="on">추천주문 (12)</a>
+              <a href="#">주문확정</a>
+              <a href="#">주문이력</a>
+              <a href="#">긴급/수기주문</a>
+              <h5>필터 프리셋</h5>
+              <a href="#">잔량&lt;20%</a>
+              <a href="#">D+1 납품</a>
+              <a href="#">고수요(분할)</a>
+              <a href="#">신규/미터미설치</a>
+            </aside>
+            <main class="main">
+              <div class="page-h">
+                <h2>추천주문 List</h2>
+                <div class="tools">
+                  <button class="btn ghost">⤓ Excel</button>
+                  <button class="btn">⟳ 모델 재실행</button>
+                  <button class="btn primary">+ 선택 일괄 확정 (3)</button>
+                </div>
+              </div>
+              <div class="tabs">
+                <div class="t on">전체 (12)</div>
+                <div class="t">긴급 (3)</div>
+                <div class="t">주의 (4)</div>
+                <div class="t">정상 (4)</div>
+                <div class="t">보류·예외 (1)</div>
+              </div>
+              <div class="filterbar">
+                <select class="sel"><option>충전소 - 원곡</option></select>
+                <select class="sel"><option>업종 - 전체</option></select>
+                <select class="sel"><option>군집 - 전체</option></select>
+                <select class="sel"><option>납품일 - D+0~D+2</option></select>
+                <select class="sel"><option>SM 상태 - 전체</option></select>
+                <input class="search" placeholder="수요처명, 코드, 주소 검색..." />
+              </div>
+
+              <table>
+                <thead>
+                <tr>
+                  <th><input type="checkbox" /></th>
+                  <th>우선</th>
+                  <th>수요처</th>
+                  <th>업종/군집</th>
+                  <th>탱크 잔량 (안전재고 임계값)</th>
+                  <th>예상 소진</th>
+                  <th>권장량 / 차량</th>
+                  <th>모델 신뢰도</th>
+                  <th>SM 상태</th>
+                  <th>액션</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr class="urgent">
+                    <td><input type="checkbox" checked /></td>
+                    <td><span class="badge danger">P0</span></td>
+                    <td><b>안ㅇㅇ식품</b><div style="font-size:11px;color:var(--muted)">SM-A12-001</div></td>
+                    <td>산업용 / C-3 (체적·고소비)</td>
+                    <td><div class="gauge"><span class="pct" style="color:var(--danger)">8%</span><div class="bar"><i class="lvl-d" style="width:8%"></i><span class="th" style="left:18%"></span></div></div><div style="font-size:10.5px;color:var(--muted)">임계 18% / Daily Max 92kg</div></td>
+                    <td>D+0 14:00</td>
+                    <td><b>850 kg</b><div style="font-size:10.5px;color:var(--muted)">12t-3호차</div></td>
+                    <td><span class="badge ok">94%</span></td>
+                    <td><span class="pill ok">정상</span></td>
+                    <td><button class="btn primary">확정</button> <button class="btn ghost">상세</button></td>
+                  </tr>
+                  <tr class="urgent">
+                    <td><input type="checkbox" checked /></td>
+                    <td><span class="badge danger">P0</span></td>
+                    <td><b>동ㅇㅇ공장</b><div style="font-size:11px;color:var(--muted)">SM-B07-022</div></td>
+                    <td>산업용 / C-3</td>
+                    <td><div class="gauge"><span class="pct" style="color:var(--danger)">12%</span><div class="bar"><i class="lvl-d" style="width:12%"></i><span class="th" style="left:18%"></span></div></div><div style="font-size:10.5px;color:var(--muted)">임계 18% / Daily Max 110kg</div></td>
+                    <td>D+1 09:00</td>
+                    <td><b>1,240 kg</b><div style="font-size:10.5px;color:var(--muted)">12t-1호차 / 분할 1/2</div></td>
+                    <td><span class="badge ok">91%</span></td>
+                    <td><span class="pill warn">샘플링↑</span></td>
+                    <td><button class="btn primary">확정</button> <button class="btn ghost">상세</button></td>
+                  </tr>
+                  <tr class="attention">
+                    <td><input type="checkbox" checked /></td>
+                    <td><span class="badge warn">P1</span></td>
+                    <td><b>양ㅇ산업</b></td>
+                    <td>상업용 / C-1</td>
+                    <td><div class="gauge"><span class="pct" style="color:var(--warning)">22%</span><div class="bar"><i class="lvl-w" style="width:22%"></i><span class="th" style="left:20%"></span></div></div><div style="font-size:10.5px;color:var(--muted)">임계 20%</div></td>
+                    <td>D+1 16:00</td>
+                    <td>640 kg<div style="font-size:10.5px;color:var(--muted)">12t-2호차</div></td>
+                    <td><span class="badge ok">88%</span></td>
+                    <td><span class="pill ok">정상</span></td>
+                    <td><button class="btn primary">확정</button> <button class="btn ghost">상세</button></td>
+                  </tr>
+                  <tr class="normal">
+                    <td><input type="checkbox" /></td>
+                    <td><span class="badge info">P2</span></td>
+                    <td><b>한ㅇ가스</b></td>
+                    <td>산업용 / C-2</td>
+                    <td><div class="gauge"><span class="pct">31%</span><div class="bar"><i class="lvl-o" style="width:31%"></i><span class="th" style="left:22%"></span></div></div><div style="font-size:10.5px;color:var(--muted)">임계 22%</div></td>
+                    <td>D+2 11:00</td>
+                    <td>520 kg</td>
+                    <td><span class="badge warn">73%</span></td>
+                    <td><span class="pill ok">정상</span></td>
+                    <td><button class="btn">확정</button></td>
+                  </tr>
+                  <tr class="hold">
+                    <td><input type="checkbox" disabled /></td>
+                    <td><span class="badge gray">보류</span></td>
+                    <td><b>OO펄프</b></td>
+                    <td>산업용 / C-3</td>
+                    <td><div class="gauge"><span class="pct">61%</span><div class="bar"><i class="lvl-o" style="width:61%"></i></div></div><div style="font-size:10.5px;color:#94A3B8">사용 0kg / 3일 연속</div></td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="pill warn">휴업 추정</span></td>
+                    <td><button class="btn ghost">사유 확인</button></td>
+                  </tr>
+                  <tr class="normal">
+                    <td><input type="checkbox" /></td>
+                    <td><span class="badge info">P2</span></td>
+                    <td><b>(신규) 미ㅇ식자재</b><div style="font-size:11px;color:var(--muted)">SM 미설치 · 군집평균 적용</div></td>
+                    <td>상업용 / C-1 (보조)</td>
+                    <td><div class="gauge"><span class="pct" style="color:var(--muted)">~45% (추정)</span><div class="bar"><i class="lvl-o" style="width:45%;opacity:.6;background-image:repeating-linear-gradient(45deg,#A7F3D0 0 6px,#34D399 6px 12px)"></i></div></div></td>
+                    <td>D+2 14:00</td>
+                    <td>380 kg</td>
+                    <td><span class="badge warn">62%(보조)</span></td>
+                    <td><span class="pill info">SM 미설치</span></td>
+                    <td><button class="btn">확정</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="callout">
+                <b>RQ_06 동적 조정 안내 :</b> D+1 가용 CAPA(48t) 대비 추천 합계 51.2t 초과. P2 일부를 D+2 13:00로 후행 조정 권장 → <a href="#" style="color:#92400E">[자동 재배치 적용]</a>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M02 · ORDER LIST</div>
+      <div class="scr-title">추천주문 List</div>
+      <div class="scr-summary">P0/P1/P2 우선순위 + 모델 신뢰도 + SM 상태로 검토 가속</div>
+      <div class="meta-h">컬럼 정의</div>
+      <ul class="meta-list">
+        <li>우선(P0~P2): 잔량·임계값·리드타임 종합</li>
+        <li>탱크 잔량: 게이지 + 임계값 마커(검정 라인)</li>
+        <li>모델 신뢰도: AI 예측 확률(저신뢰는 황색)</li>
+        <li>SM 상태: 정상/샘플링↑/누락/미설치/오류</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_01 외생/군집</span>
+        <span class="req-chip">RQ_02 SM 미설치</span>
+        <span class="req-chip">RQ_04 안전재고</span>
+        <span class="req-chip">RQ_05 분할/수송</span>
+        <span class="req-chip">RQ_06 시점조정</span>
+      </div>
+      <div class="meta-h">예외 케이스</div>
+      <ul class="meta-list">
+        <li>SM 미설치 → 군집평균 보조예측(빗금)</li>
+        <li>휴업/거래중단 → 보류 후 주문 제외</li>
+        <li>CAPA 초과 → 후행 자동 재배치</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M03. 주문 카드 상세 (확정 모달)
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">3</span> M03 · 주문 카드 상세 / 확정 다이얼로그</h2>
+  <p class="section-desc">한 건의 추천 주문을 펼쳐 — 잔량·예측·안전재고·분할·차량을 한눈에 확인하고 확정</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/orders/recommend/SM-B07-022</div></div>
+        <div class="win-body" style="padding:18px">
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">
+            <div class="win" style="padding:0">
+              <div class="win-body">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div style="font-size:11px;color:var(--muted);font-weight:600">B/L 주문 확정 · 2026-12-04</div>
+                    <h3 style="margin:4px 0 2px;font-size:18px">동ㅇㅇ공장 (SM-B07-022)</h3>
+                    <div style="font-size:12px;color:var(--muted)">산업용 · 체적 · 군집 C-3 · 차량배차 12t-1호차</div>
+                  </div>
+                  <div>
+                    <span class="badge danger">P0 긴급</span>
+                    <span class="pill warn">샘플링 30분 ↑</span>
+                  </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+                  <div>
+                    <div class="meta-h" style="margin:0 0 6px">잔량 & 예측</div>
+                    <div class="chart">
+                      <svg viewBox="0 0 300 120" preserveAspectRatio="none">
+                        <line x1="0" y1="92" x2="300" y2="92" stroke="#0F172A" stroke-dasharray="3 3" />
+                        <text x="6" y="88" font-size="9" fill="#0F172A">안전재고 임계 18%</text>
+                        <polyline fill="none" stroke="#1B7AB5" stroke-width="2" points="0,30 30,40 60,42 90,55 120,60 150,72 180,80 210,90 240,98" />
+                        <polyline fill="none" stroke="#00C6B7" stroke-width="2" stroke-dasharray="4 3" points="240,98 270,108 300,116" />
+                        <circle cx="240" cy="98" r="3" fill="#1B7AB5" />
+                        <text x="244" y="94" font-size="9" fill="#1B7AB5">현재 12%</text>
+                      </svg>
+                    </div>
+                    <div class="chart-legend">
+                      <span><i style="background:#1B7AB5"></i>실측 잔량</span>
+                      <span><i style="background:#00C6B7"></i>D+1·D+2 예측</span>
+                      <span><i style="background:#0F172A"></i>안전재고</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="meta-h" style="margin:0 0 6px">권장 주문 산출</div>
+                    <table>
+                      <tr><td>현재 잔량</td><td style="text-align:right"><b>12%</b> · 480 kg</td></tr>
+                      <tr><td>리드타임 소모(D+1 09:00)</td><td style="text-align:right">−110 kg</td></tr>
+                      <tr><td>안전재고 임계</td><td style="text-align:right">18% · 720 kg</td></tr>
+                      <tr><td>탱크 용량</td><td style="text-align:right">4,000 kg</td></tr>
+                      <tr><td>차량 적재 한도</td><td style="text-align:right">12,000 kg</td></tr>
+                      <tr style="background:#EFF6FF"><td><b>권장 충전량</b></td><td style="text-align:right"><b style="color:var(--primary-dark)">1,240 kg</b></td></tr>
+                      <tr><td>분할 권고</td><td style="text-align:right">1/2 (D+1 09:00, D+3 14:00)</td></tr>
+                    </table>
+                  </div>
+                </div>
+
+                <div style="margin-top:14px">
+                  <div class="meta-h" style="margin:0 0 6px">최종 입력</div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+                    <div>
+                      <div style="font-size:11px;color:var(--muted)">납품일</div>
+                      <div style="border:1px solid var(--line);padding:6px 8px;border-radius:6px;font-size:12px">2026-12-05 09:00</div>
+                    </div>
+                    <div>
+                      <div style="font-size:11px;color:var(--muted)">주문량 (조정 가능)</div>
+                      <div style="border:1px solid var(--primary);padding:6px 8px;border-radius:6px;font-size:12px;color:var(--primary-dark);font-weight:700">1,240 kg ▾</div>
+                    </div>
+                    <div>
+                      <div style="font-size:11px;color:var(--muted)">차량</div>
+                      <div style="border:1px solid var(--line);padding:6px 8px;border-radius:6px;font-size:12px">12t-1호차 (적재 4,200kg)</div>
+                    </div>
+                    <div>
+                      <div style="font-size:11px;color:var(--muted)">주문 사유 (선택)</div>
+                      <div style="border:1px solid var(--line);padding:6px 8px;border-radius:6px;font-size:12px">AI 추천 · 자동</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+                  <button class="btn ghost">사유 추가</button>
+                  <button class="btn warn">⏸ 보류</button>
+                  <button class="btn">수기 수정</button>
+                  <button class="btn primary">✓ 주문 확정</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stack">
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">예외 처리 (Drop-down)</div>
+                  <ul class="meta-list" style="font-size:13px">
+                    <li><b>다시 알림 (보류)</b> — +3일 뒤 재추천</li>
+                    <li><b>거래 중단</b> — 휴업/공사/행사</li>
+                    <li><b>비활성</b> — 시즌 미사용</li>
+                    <li><b>누락 / Data 오류</b> — 수기 보정 + 모델 학습 제외</li>
+                    <li><b>수기 접수</b> — 전화/팩스 수신분 직접 입력</li>
+                    <li><b>거래 종료</b> — 영구 제외</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">결정 근거 (AI Explainability)</div>
+                  <ul class="meta-list" style="font-size:12.5px">
+                    <li>군집 C-3 평균 일소비량 92kg ▶ Daily Max 110kg</li>
+                    <li>리드타임 D+1 09:00, 잔량 8% 도달 임박</li>
+                    <li>최근 2주 외생변수: 평균기온 −2.4℃, 가동률 88%</li>
+                    <li>Rolling max 1h: 14kg / 시차 7h 패턴 안정</li>
+                    <li>안전재고 임계 18% (정책: 15% Hard Fail 방지)</li>
+                  </ul>
+                  <div class="callout" style="margin-top:8px"><b>추천 신뢰도 91%</b> — 최근 30일 적중률 88.4%</div>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">최근 6주 주문 이력</div>
+                  <div class="chart" style="height:90px">
+                    <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                      <rect x="10"  y="20" width="20" height="40" fill="#BFDBFE"/>
+                      <rect x="60"  y="14" width="20" height="46" fill="#BFDBFE"/>
+                      <rect x="110" y="22" width="20" height="38" fill="#BFDBFE"/>
+                      <rect x="160" y="10" width="20" height="50" fill="#1B7AB5"/>
+                      <rect x="210" y="18" width="20" height="42" fill="#BFDBFE"/>
+                      <rect x="260" y="6"  width="20" height="54" fill="#1B7AB5"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M03 · ORDER DETAIL</div>
+      <div class="scr-title">주문 카드 상세</div>
+      <div class="scr-summary">한 건 검토→ 확정/보류/수기 — 결정 근거가 옆에 항상</div>
+      <div class="meta-h">예외 처리 메뉴</div>
+      <ul class="meta-list">
+        <li>다시 알림 / 거래중단 / 비활성</li>
+        <li>누락(Data 오류) / 수기 접수 / 거래종료</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_03 리드타임</span>
+        <span class="req-chip">RQ_04 안전재고</span>
+        <span class="req-chip">RQ_05 분할</span>
+        <span class="req-chip">RQ_07 센서</span>
+        <span class="req-chip">RQ_08 사용상태</span>
+      </div>
+      <div class="meta-h">상태 전이</div>
+      <ul class="meta-list">
+        <li>추천 → 확정 / 수기수정 → 확정</li>
+        <li>추천 → 보류 → (재추천/제외)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M04. 수요처 상세
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">4</span> M04 · 수요처 상세 (잔량·예측·안전재고)</h2>
+  <p class="section-desc">개별 수요처 프로파일과 예측 모델, 안전재고 정책을 한 화면에서 관리</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/customers/SM-B07-022</div></div>
+        <div class="win-body" style="padding:18px">
+          <div class="page-h">
+            <div>
+              <div style="font-size:11px;color:var(--muted)">수요처 / 산업용 / 체적</div>
+              <h2>동ㅇㅇ공장 <span style="font-weight:400;font-size:13px;color:var(--muted)">SM-B07-022 · 군집 C-3</span></h2>
+            </div>
+            <div class="tools">
+              <button class="btn ghost">⓵ 마스터 보기</button>
+              <button class="btn">정책 변경</button>
+              <button class="btn primary">예측 재실행</button>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <div class="t on">개요</div>
+            <div class="t">잔량/예측</div>
+            <div class="t">주문이력</div>
+            <div class="t">스마트미터</div>
+            <div class="t">안전재고 정책</div>
+            <div class="t">알림</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">
+            <div class="stack">
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">잔량 시계열 + D+3 예측</div>
+                  <div class="chart" style="height:200px">
+                    <svg viewBox="0 0 600 200" preserveAspectRatio="none">
+                      <!-- safety threshold -->
+                      <line x1="0" y1="160" x2="600" y2="160" stroke="#0F172A" stroke-dasharray="4 3"/>
+                      <text x="6" y="156" font-size="10" fill="#0F172A">안전재고 18%</text>
+                      <!-- past actual -->
+                      <polyline fill="none" stroke="#1B7AB5" stroke-width="2" points="0,40 40,55 80,80 120,60 160,90 200,75 240,100 280,90 320,120 360,110 400,140 440,160 470,170"/>
+                      <!-- prediction band -->
+                      <polygon fill="#A7F3D0" opacity=".5" points="470,160 500,165 530,170 560,180 600,190 600,196 560,196 530,185 500,178 470,176"/>
+                      <polyline fill="none" stroke="#00C6B7" stroke-width="2" stroke-dasharray="4 3" points="470,170 500,172 530,176 560,184 600,194"/>
+                      <!-- delivery markers -->
+                      <g fill="#F59E0B">
+                        <circle cx="80"  cy="80"  r="4"/>
+                        <circle cx="200" cy="75"  r="4"/>
+                        <circle cx="320" cy="120" r="4"/>
+                      </g>
+                      <text x="540" y="166" font-size="10" fill="#065F46">D+1 예측</text>
+                      <text x="566" y="184" font-size="10" fill="#92400E">D+2~3 폭</text>
+                    </svg>
+                  </div>
+                  <div class="chart-legend">
+                    <span><i style="background:#1B7AB5"></i>실측</span>
+                    <span><i style="background:#00C6B7"></i>예측</span>
+                    <span><i style="background:#A7F3D0"></i>예측 신뢰구간</span>
+                    <span><i style="background:#F59E0B"></i>납품 이력</span>
+                    <span><i style="background:#0F172A"></i>안전재고</span>
+                  </div>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">파생 변수 / 모델 입력 (RQ_01)</div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;font-size:12px">
+                    <div><div style="color:var(--muted)">평균 사용량</div><b>92.4 kg/일</b></div>
+                    <div><div style="color:var(--muted)">소비속도</div><b>3.85 kg/h</b></div>
+                    <div><div style="color:var(--muted)">관측일수</div><b>432일</b></div>
+                    <div><div style="color:var(--muted)">고소비 구간</div><b>09~17시</b></div>
+                    <div><div style="color:var(--muted)">주문 주기</div><b>5.2일</b></div>
+                    <div><div style="color:var(--muted)">충전 비중</div><b>68%</b></div>
+                    <div><div style="color:var(--muted)">탱크 용량</div><b>4,000 kg</b></div>
+                    <div><div style="color:var(--muted)">유사도(군집중심)</div><b>0.92</b></div>
+                    <div><div style="color:var(--muted)">Rolling Max 1h</div><b>14 kg</b></div>
+                    <div><div style="color:var(--muted)">Rolling Mean 1h</div><b>3.6 kg</b></div>
+                    <div><div style="color:var(--muted)">Time-lag 7h</div><b>+0.18</b></div>
+                    <div><div style="color:var(--muted)">기온(1주 평균)</div><b>−2.4℃</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stack">
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">안전재고 정책 (RQ_04)</div>
+                  <table>
+                    <tr><td>Hard Fail 임계</td><td style="text-align:right"><b>15%</b></td></tr>
+                    <tr><td>리드타임</td><td style="text-align:right">D+1 ~ D+2</td></tr>
+                    <tr><td>Daily Max 사용량</td><td style="text-align:right">110 kg</td></tr>
+                    <tr><td>리드타임 변동성(σ)</td><td style="text-align:right">±0.4일</td></tr>
+                    <tr style="background:#EFF6FF"><td><b>동적 임계 (Dynamic SS)</b></td><td style="text-align:right"><b style="color:var(--primary-dark)">18%</b></td></tr>
+                  </table>
+                  <button class="btn ghost" style="margin-top:8px;width:100%">⚙ 임계값/정책 시뮬레이션</button>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">사용 상태 (RQ_08)</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <span class="pill ok">정상 가동</span>
+                    <span class="pill info">2교대</span>
+                    <span class="pill warn">주말 가동 ↓</span>
+                  </div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:8px">최근 30일 가동률 88% · 명절 가동 중단 1회 자동 감지</div>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">SM 상태 (RQ_07)</div>
+                  <ul class="meta-list" style="font-size:12.5px">
+                    <li>수신 주기 30min (배터리 효율 87%)</li>
+                    <li>최근 이상 1건: 납품 중 잔량 무변동 (해소)</li>
+                    <li>샘플링 자동 ↑ 60min → 30min</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M04 · CUSTOMER</div>
+      <div class="scr-title">수요처 상세</div>
+      <div class="scr-summary">예측·안전재고·SM·사용상태를 통합 관리</div>
+      <div class="meta-h">탭 구성</div>
+      <ul class="meta-list">
+        <li>개요 / 잔량·예측 / 주문이력</li>
+        <li>스마트미터 / 안전재고 정책 / 알림</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_01 외생/군집</span>
+        <span class="req-chip">RQ_02 보조예측</span>
+        <span class="req-chip">RQ_03 리드타임</span>
+        <span class="req-chip">RQ_04 안전재고</span>
+        <span class="req-chip">RQ_07 센서</span>
+        <span class="req-chip">RQ_08 사용상태</span>
+      </div>
+      <div class="meta-h">시뮬레이션</div>
+      <ul class="meta-list">
+        <li>임계값 슬라이더 → 주문 발생 빈도 변화</li>
+        <li>SM 미설치 시 군집 평균 보조예측 적용</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M05. 스마트미터 모니터링
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">5</span> M05 · 스마트미터 / 센서 모니터링</h2>
+  <p class="section-desc">센서 오류 감지 · 사용 상태 자동 판단 · 수신 주기 최적화 (RQ_07 / RQ_08)</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/monitoring/sensors</div></div>
+        <div class="win-body" style="padding:18px">
+          <div class="page-h">
+            <h2>스마트미터 모니터링</h2>
+            <div class="tools">
+              <button class="btn ghost">⤓ 이상 리포트</button>
+              <button class="btn">샘플링 일괄 변경</button>
+            </div>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><div class="lbl">전체 SM</div><div class="val">198</div><div class="delta">설치율 92%</div></div>
+            <div class="kpi"><div class="lbl">정상</div><div class="val" style="color:var(--success)">181</div><div class="delta">91.4%</div></div>
+            <div class="kpi"><div class="lbl">이상 감지</div><div class="val" style="color:var(--danger)">8</div><div class="delta down">즉시 처리</div></div>
+            <div class="kpi"><div class="lbl">샘플링 자동조정</div><div class="val">14</div><div class="delta">배터리 효율 +9%</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">
+            <div class="win">
+              <div class="win-body">
+                <div class="meta-h" style="margin:0 0 6px">이상 패턴 감지 List</div>
+                <table>
+                  <thead><tr><th>심각도</th><th>수요처</th><th>이상 유형</th><th>발생</th><th>현재 상태</th><th>조치</th></tr></thead>
+                  <tbody>
+                    <tr class="urgent"><td><span class="badge danger">High</span></td><td>동ㅇㅇ공장</td><td>납품 중 잔량 무변동</td><td>2026-04-28 06:12</td><td><span class="pill warn">샘플링↑</span></td><td><button class="btn ghost">현장 점검</button></td></tr>
+                    <tr class="urgent"><td><span class="badge danger">High</span></td><td>한ㅇ제지</td><td>납품 없는데 잔량 급증</td><td>2026-04-27 22:40</td><td><span class="pill danger">검증 필요</span></td><td><button class="btn ghost">데이터 확인</button></td></tr>
+                    <tr class="attention"><td><span class="badge warn">Mid</span></td><td>경ㅇ상회</td><td>수신 끊김 4시간</td><td>2026-04-28 04:00</td><td><span class="pill warn">통신 이상</span></td><td><button class="btn ghost">통신사 확인</button></td></tr>
+                    <tr class="attention"><td><span class="badge warn">Mid</span></td><td>OO펄프</td><td>3일 연속 사용 0kg</td><td>2026-04-26</td><td><span class="pill info">휴업 추정</span></td><td><button class="btn ghost">상태 변경</button></td></tr>
+                    <tr class="normal"><td><span class="badge info">Low</span></td><td>대ㅇ알텍</td><td>이상 과다 소비</td><td>2026-04-25</td><td><span class="pill ok">자동복구</span></td><td><button class="btn ghost">로그</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="stack">
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">사용 상태 자동 판단 (RQ_08)</div>
+                  <ul class="meta-list" style="font-size:12.5px">
+                    <li><b>휴업/공장중단</b> 자동 감지 → 주문 생성 제외 처리</li>
+                    <li><b>이상 저하/과다 소비</b> 패턴 분류 → 알림</li>
+                    <li>공장 운영 캘린더 연계 (명절·법정공휴일)</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">수신 주기 최적화 (RQ_07)</div>
+                  <table>
+                    <tr><th>탱크 규격</th><th>고소비 구간</th><th>샘플링</th></tr>
+                    <tr><td>≥4t</td><td>주간 09~17</td><td>15min</td></tr>
+                    <tr><td>2~4t</td><td>—</td><td>30min</td></tr>
+                    <tr><td>&lt;2t</td><td>—</td><td>60min</td></tr>
+                  </table>
+                  <div class="callout" style="margin-top:8px">이상 발생 시 자동 ↑1단계 후 24시간 모니터링</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M05 · MONITORING</div>
+      <div class="scr-title">스마트미터 모니터링</div>
+      <div class="scr-summary">센서 오류 / 사용상태 / 샘플링 통합</div>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_07 센서 오류</span>
+        <span class="req-chip">RQ_08 사용상태</span>
+      </div>
+      <div class="meta-h">조치 흐름</div>
+      <ul class="meta-list">
+        <li>High → 현장 점검 / 통신 확인</li>
+        <li>Mid → 자동 샘플링 ↑ + 모니터링</li>
+        <li>Low → 자동 복구 후 로그</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M06. KPI 대시보드
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">6</span> M06 · KPI 대시보드 (적중률·자동화율)</h2>
+  <p class="section-desc">RQ_09 — 거래처/차량/수요처별 주문 적중률 + 자동화 커버리지 시각화</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="win">
+        <div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">wego.skbs.co.kr/analytics/kpi</div></div>
+        <div class="win-body" style="padding:18px">
+          <div class="page-h">
+            <h2>주문 자동화 KPI</h2>
+            <div class="tools">
+              <select class="sel"><option>2026-04 (월간)</option></select>
+              <select class="sel"><option>충전소 - 원곡</option></select>
+              <button class="btn ghost">⤓ 보고서 PDF</button>
+            </div>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><div class="lbl">주문 적중률</div><div class="val">88.4%</div><div class="delta">▲ +3.1%p</div></div>
+            <div class="kpi"><div class="lbl">자동화 커버리지</div><div class="val">92.5%</div><div class="delta">목표 90%</div></div>
+            <div class="kpi"><div class="lbl">긴급수송 비중</div><div class="val">4.2%</div><div class="delta down">▼ −2.6%p</div></div>
+            <div class="kpi"><div class="lbl">차량 처리량</div><div class="val">+8.7%</div><div class="delta">목표 +10%</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">
+            <div class="win">
+              <div class="win-body">
+                <div class="meta-h" style="margin:0 0 6px">월간 적중률 추이 (실제 vs 예측)</div>
+                <div class="chart" style="height:200px">
+                  <svg viewBox="0 0 600 200" preserveAspectRatio="none">
+                    <polyline fill="none" stroke="#1B7AB5" stroke-width="2" points="0,160 60,150 120,140 180,130 240,120 300,115 360,108 420,100 480,90 540,82 600,80"/>
+                    <polyline fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4 3" points="0,170 60,168 120,165 180,162 240,160 300,158 360,155 420,150 480,140 540,135 600,130"/>
+                    <line x1="0" y1="60" x2="600" y2="60" stroke="#10B981" stroke-dasharray="3 3"/>
+                    <text x="6" y="56" font-size="9" fill="#065F46">목표 90%</text>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span><i style="background:#1B7AB5"></i>주문 적중률</span>
+                  <span><i style="background:#F59E0B"></i>긴급수송 비중</span>
+                  <span><i style="background:#10B981"></i>목표선</span>
+                </div>
+              </div>
+            </div>
+            <div class="stack">
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">군집별 적중률</div>
+                  <table>
+                    <tr><th>군집</th><th>건수</th><th>적중률</th><th>오차(±)</th></tr>
+                    <tr><td>C-1 상업용</td><td>312</td><td><span class="badge ok">91.2%</span></td><td>4.1%</td></tr>
+                    <tr><td>C-2 산업용 中</td><td>248</td><td><span class="badge ok">89.7%</span></td><td>5.0%</td></tr>
+                    <tr><td>C-3 산업용 高</td><td>164</td><td><span class="badge warn">82.4%</span></td><td>7.8%</td></tr>
+                    <tr><td>C-4 농어업</td><td>76</td><td><span class="badge warn">78.5%</span></td><td>9.4%</td></tr>
+                    <tr><td>SM 미설치(보조)</td><td>52</td><td><span class="badge warn">71.0%</span></td><td>11.2%</td></tr>
+                  </table>
+                </div>
+              </div>
+              <div class="win">
+                <div class="win-body">
+                  <div class="meta-h" style="margin:0 0 6px">자동화 커버리지 (수기 개입 비중)</div>
+                  <div class="gauge" style="margin-bottom:6px"><span class="pct">92.5%</span><div class="bar"><i class="lvl-o" style="width:92.5%"></i></div></div>
+                  <table>
+                    <tr><td>완전 자동(터치 0)</td><td style="text-align:right"><b>78.2%</b></td></tr>
+                    <tr><td>최소 개입(수량 미세조정)</td><td style="text-align:right">14.3%</td></tr>
+                    <tr><td>수기 수정</td><td style="text-align:right">5.1%</td></tr>
+                    <tr><td>수기 신규</td><td style="text-align:right">2.4%</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M06 · KPI</div>
+      <div class="scr-title">KPI 대시보드</div>
+      <div class="scr-summary">적중률·자동화율·긴급수송·처리량 추적</div>
+      <div class="meta-h">집계 기준</div>
+      <ul class="meta-list">
+        <li>실제 납품량 vs 예측량 ±10% 내 = 적중</li>
+        <li>수기 수정/신규 = 자동화 미달</li>
+        <li>긴급수송 = 정규 배차 외 추가 출고</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_09 KPI</span>
+      </div>
+      <div class="meta-h">기대 효과 연계</div>
+      <ul class="meta-list">
+        <li>긴급수송 비용 50% 절감</li>
+        <li>차량 처리량 +10% 확대</li>
+        <li>업무 비효율 70% 절감 (연 2,717h)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     M07. 모바일 (개선)
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">7</span> M07 · 모바일 주문 신청 (개선)</h2>
+  <p class="section-desc">기존 “LPG 주문 신청” 화면 → AI 추천·원클릭 확정·예외만 처리하는 구조로 재설계</p>
+  <div class="screen">
+    <div class="scr-body">
+      <div class="phones">
+        <!-- 1. 홈 -->
+        <div class="phone">
+          <div class="scr">
+            <div class="ph">
+              <span>≡  WEGO 주문</span>
+              <span>🔔 3</span>
+            </div>
+            <div class="pb" style="background:#F4F6FA">
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-bottom:8px">
+                <div style="font-size:11px;color:var(--muted)">2026-04-28 / 원곡</div>
+                <div style="font-size:13px;font-weight:700">오늘의 추천 12건</div>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                  <span class="badge danger">긴급 3</span>
+                  <span class="badge warn">주의 4</span>
+                  <span class="badge ok">정상 5</span>
+                </div>
+              </div>
+              <div class="item urgent">
+                <div class="nm">안ㅇㅇ식품 <span class="badge danger">P0</span></div>
+                <div class="ln">잔량 8% · D+0 14:00 · 850 kg</div>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                  <button class="btn primary" style="flex:1">원클릭 확정</button>
+                  <button class="btn ghost">상세</button>
+                </div>
+              </div>
+              <div class="item urgent">
+                <div class="nm">동ㅇㅇ공장 <span class="badge danger">P0</span></div>
+                <div class="ln">잔량 12% · D+1 09:00 · 1,240 kg</div>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                  <button class="btn primary" style="flex:1">원클릭 확정</button>
+                  <button class="btn ghost">상세</button>
+                </div>
+              </div>
+              <div class="item warn">
+                <div class="nm">양ㅇ산업 <span class="badge warn">P1</span></div>
+                <div class="ln">잔량 22% · D+1 16:00 · 640 kg</div>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                  <button class="btn primary" style="flex:1">원클릭 확정</button>
+                  <button class="btn ghost">보류</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="nm">한ㅇ가스 <span class="badge info">P2</span></div>
+                <div class="ln">잔량 31% · D+2 11:00 · 520 kg</div>
+              </div>
+            </div>
+            <div class="pn">
+              <div class="b on">홈</div>
+              <div class="b">알림</div>
+              <div class="b">이력</div>
+              <div class="b">내정보</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 상세/확정 -->
+        <div class="phone">
+          <div class="scr">
+            <div class="ph">
+              <span>‹ 주문 확정</span>
+              <span>저장</span>
+            </div>
+            <div class="pb">
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-bottom:8px">
+                <div style="font-size:11px;color:var(--muted)">2025-12-04 주문 확정</div>
+                <div style="font-weight:700;font-size:14px">동ㅇㅇ공장 (SM-B07-022)</div>
+                <div style="font-size:11px;color:var(--muted)">차량배차 12t-1호차</div>
+                <div style="margin-top:8px;display:flex;gap:10px;align-items:center">
+                  <div class="gauge" style="flex:1"><span class="pct" style="color:var(--danger)">12%</span><div class="bar"><i class="lvl-d" style="width:12%"></i><span class="th" style="left:18%"></span></div></div>
+                </div>
+                <div style="font-size:11px;color:var(--muted);margin-top:6px">예상 소진 D+0 06h · 안전재고 18%</div>
+              </div>
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-bottom:8px">
+                <div style="font-size:11px;color:var(--muted)">예상 재고 소진 시점적</div>
+                <div style="font-weight:700">D+0 6h</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:6px">최근 2주: 3회/월 · 예상납품량 850kg</div>
+                <div style="font-size:11px;color:var(--muted)">충전 담당자 변경 010-9945-8663</div>
+              </div>
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-bottom:8px">
+                <div style="font-size:11px;color:var(--muted)">주문량</div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+                  <button class="btn">최소량 D▼0</button>
+                  <div style="flex:1;text-align:center;font-weight:800;color:var(--primary-dark);font-size:18px">1,240 kg</div>
+                  <button class="btn">권장 수요량 ▶</button>
+                </div>
+              </div>
+              <button class="btn accent" style="width:100%;font-size:14px;padding:12px;background:var(--accent);color:#fff;border-radius:10px">주문 확정</button>
+              <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px">
+                <button class="btn">다시 알림(보류)</button>
+                <button class="btn">거래중단</button>
+                <button class="btn">비활성</button>
+                <button class="btn">누락(Data 오류)</button>
+                <button class="btn">수기 접수</button>
+                <button class="btn">거래종료</button>
+              </div>
+            </div>
+            <div class="pn">
+              <div class="b">홈</div>
+              <div class="b on">확정</div>
+              <div class="b">이력</div>
+              <div class="b">내정보</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 알림 / 모니터링 -->
+        <div class="phone">
+          <div class="scr">
+            <div class="ph">
+              <span>‹ 알림 (3)</span>
+              <span>전체보기</span>
+            </div>
+            <div class="pb" style="background:#F4F6FA">
+              <div class="alert"><b>[센서 이상]</b> 동ㅇㅇ공장 — 납품 중 잔량 무변동</div>
+              <div class="alert warn" style="margin-top:8px"><b>[휴업 추정]</b> OO펄프 — 사용 0kg/3일</div>
+              <div class="alert info" style="margin-top:8px"><b>[배차부하]</b> D+1 5건 → 후행 조정 권장</div>
+
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-top:12px">
+                <div class="meta-h" style="margin:0 0 6px">충전소 S/B 잔량</div>
+                <div style="display:flex;gap:8px">
+                  <div class="tank" style="flex:1">
+                    <div>
+                      <div class="t" style="height:60px;width:30px"><span class="pct" style="font-size:8px;top:2px">61%</span><i style="height:61%"></i></div>
+                      <div class="lbl" style="font-size:10px">SB1</div>
+                    </div>
+                    <div>
+                      <div class="t" style="height:60px;width:30px"><span class="pct" style="font-size:8px;top:2px">82%</span><i style="height:82%"></i></div>
+                      <div class="lbl" style="font-size:10px">SB2</div>
+                    </div>
+                    <div>
+                      <div class="t" style="height:60px;width:30px"><span class="pct" style="font-size:8px;top:2px">94%</span><i style="height:94%"></i></div>
+                      <div class="lbl" style="font-size:10px">충전소</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="background:#fff;border-radius:10px;padding:10px;margin-top:8px">
+                <div class="meta-h" style="margin:0 0 6px">오늘의 KPI</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:11px">
+                  <div><div style="color:var(--muted)">적중률</div><b style="font-size:14px">88.4%</b></div>
+                  <div><div style="color:var(--muted)">자동화</div><b style="font-size:14px">92.5%</b></div>
+                  <div><div style="color:var(--muted)">긴급</div><b style="font-size:14px;color:var(--danger)">3</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="pn">
+              <div class="b">홈</div>
+              <div class="b alt">확정</div>
+              <div class="b on">알림</div>
+              <div class="b">내정보</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:14px">
+        <b>모바일 핵심 변경점</b> — 기존 “고객사 검색 + 수기 입력” 방식 → AI가 추천한 List에서 <b>원클릭 확정</b>. 예외 6종(다시알림·거래중단·비활성·누락·수기접수·거래종료)만 사용자가 처리. 충전소 S/B 게이지·KPI까지 한 화면에서 확인.
+      </div>
+    </div>
+    <div class="scr-meta">
+      <div class="scr-id">M07 · MOBILE</div>
+      <div class="scr-title">모바일 (개선)</div>
+      <div class="scr-summary">3 화면: 홈(추천 List) / 확정 / 알림</div>
+      <div class="meta-h">개선 포인트</div>
+      <ul class="meta-list">
+        <li>주문복사 → 원클릭 확정</li>
+        <li>잔량 게이지·예상소진·권장량 항상 노출</li>
+        <li>예외 6종 액션을 1탭으로 처리</li>
+        <li>SM 잔량/KPI 통합 표시</li>
+      </ul>
+      <div class="meta-h">요구사항 매핑</div>
+      <div>
+        <span class="req-chip">RQ_03</span>
+        <span class="req-chip">RQ_04</span>
+        <span class="req-chip">RQ_05</span>
+        <span class="req-chip">RQ_07</span>
+        <span class="req-chip">RQ_08</span>
+        <span class="req-chip">RQ_09</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     요약: 요구사항 매핑 매트릭스
+     ============================================================ -->
+<section class="section">
+  <h2 class="section-title"><span class="num">★</span> 요구사항 ↔ 화면 매핑 매트릭스</h2>
+  <div class="screen" style="grid-template-columns:1fr">
+    <div class="scr-body" style="border-right:none">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:14%">요구사항 ID</th>
+            <th style="width:22%">요구사항명</th>
+            <th>M01<br>대시보드</th><th>M02<br>추천 List</th><th>M03<br>주문상세</th><th>M04<br>수요처상세</th><th>M05<br>모니터링</th><th>M06<br>KPI</th><th>M07<br>모바일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SKBS_AMO_RQ_01</td><td>외생변수·군집화 예측</td><td></td><td>●</td><td>●</td><td>●</td><td></td><td>●</td><td></td></tr>
+          <tr><td>SKBS_AMO_RQ_02</td><td>데이터 부족 보조 예측</td><td></td><td>●</td><td></td><td>●</td><td>●</td><td>●</td><td></td></tr>
+          <tr><td>SKBS_AMO_RQ_03</td><td>리드타임 잔량 예측</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td></td><td>●</td></tr>
+          <tr><td>SKBS_AMO_RQ_04</td><td>안전재고 동적 임계</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td></td><td>●</td></tr>
+          <tr><td>SKBS_AMO_RQ_05</td><td>다건/수송 효율</td><td>●</td><td>●</td><td>●</td><td></td><td></td><td>●</td><td>●</td></tr>
+          <tr><td>SKBS_AMO_RQ_06</td><td>주문 시점 동적 조정</td><td>●</td><td>●</td><td></td><td></td><td></td><td>●</td><td></td></tr>
+          <tr><td>SKBS_AMO_RQ_07</td><td>스마트미터 오류/주기</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td>●</td></tr>
+          <tr><td>SKBS_AMO_RQ_08</td><td>사용 상태 자동 판단</td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td>●</td></tr>
+          <tr><td>SKBS_AMO_RQ_09</td><td>KPI 관리·모니터링</td><td>●</td><td></td><td></td><td></td><td></td><td>●</td><td>●</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:10px"><b>다음 단계</b> — 사용자 인터뷰(소장 1명/기사 2명) 기반 와이어 검증 → 고해상도 GUI(Figma) → 핵심 4개 화면 프로토타입 → Pilot 적용</div>
+    </div>
+  </div>
+</section>
+
+<div class="doc-footer">
+  WEGO 2.0 · 주문자동화 화면설계서 v0.1 · 성림에너지 Pilot용 ·
+  본 문서는 화면 정의 및 흐름 명세이며, 실제 색·타이포·간격은 GUI 디자인 단계에서 정합화됩니다.
+</div>
+
+</body>
+</html>

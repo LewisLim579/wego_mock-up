@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEGO+ 업무시스템</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+
+        <!-- ===================== TOP HEADER (full width) ===================== -->
+        <header class="app-header">
+            <div class="app-header-brand">
+                <img src="./image/login_logo.png" alt="wego+" class="brand-logo">
+            </div>
+            <div class="app-header-content">
+                <nav class="header-breadcrumb" aria-label="breadcrumb">
+                    <span class="material-symbols-outlined bc-home">home</span>
+                    <span class="bc-sep">›</span>
+                    <span>주문</span>
+                    <span class="bc-sep">›</span>
+                    <span>B/L 주문관리</span>
+                    <span class="bc-sep">›</span>
+                    <span class="bc-current">B/L 주문신청</span>
+                </nav>
+                <div class="header-tools">
+                    <div class="user-profile">
+                        <div class="user-badge">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <span class="user-name">김민수</span>
+                    </div>
+                    <div class="family-site-box">
+                        <select class="select-box">
+                            <option>FO 운영자</option>
+                            <option>관리자</option>
+                            <option>기사</option>
+                        </select>
+                        <span class="material-symbols-outlined select-arrow">expand_more</span>
+                    </div>
+                    <button type="button" class="btn-logout">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span>로그아웃</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===================== BODY (sidebar + main) ===================== -->
+        <div class="app-body">
+
+            <!-- ===================== SIDEBAR ===================== -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="sidebar-nav custom-scrollbar">
+
+                <div class="nav-group" data-tooltip="즐겨찾기">
+                    <button class="nav-item-1depth nav-favorite active">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">star</span>
+                            <span class="nav-text">즐겨찾기</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="마이">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">person</span>
+                            <span class="nav-text">마이</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="주문">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">inventory_2</span>
+                            <span class="nav-text">주문</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="배차">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">local_shipping</span>
+                            <span class="nav-text">배차</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="안전">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">verified_user</span>
+                            <span class="nav-text">안전</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="시설관리">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">dashboard</span>
+                            <span class="nav-text">시설관리</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="시설지원">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">build</span>
+                            <span class="nav-text">시설지원</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="업무지원">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">folder_open</span>
+                            <span class="nav-text">업무지원</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="보고서">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">bar_chart</span>
+                            <span class="nav-text">보고서</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="행복충전">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">credit_card</span>
+                            <span class="nav-text">행복충전</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="커뮤니티">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">forum</span>
+                            <span class="nav-text">커뮤니티</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-group" data-tooltip="기준정보">
+                    <button class="nav-item-1depth">
+                        <div class="nav-item-title">
+                            <span class="material-symbols-outlined nav-icon">storage</span>
+                            <span class="nav-text">기준정보</span>
+                        </div>
+                    </button>
+                </div>
+
+                </nav>
+            </aside>
+
+            <!-- ===================== MAIN AREA ===================== -->
+            <main class="main-area">
+
+            <!-- ===================== TAB BAR ===================== -->
+            <!-- <div class="tab-bar-wrap" id="tabBar">
+   
+                <div class="tab-item tab-home" title="홈">
+                    <span class="material-symbols-outlined tab-icon">acute</span>
+                    최근 작업
+                </div>
+
+
+                <div class="tab-item active">
+                    <span>B/L주문신청</span>
+                    <span class="tab-close material-symbols-outlined">close</span>
+                </div>
+
+    
+                <div class="tab-item">
+                    <span>B/L주문조회</span>
+                    <span class="tab-close material-symbols-outlined">close</span>
+                </div>
+
+                <div class="tab-item">
+                    <span>일일 배차계획</span>
+                    <span class="tab-close material-symbols-outlined">close</span>
+                </div>
+
+
+                <div class="tab-item">
+                    <span>지점별 매출현황</span>
+                    <span class="tab-close material-symbols-outlined">close</span>
+                </div>
+
+            </div> -->
+
+            <!-- ===================== CONTENT ===================== -->
+            <div class="content-wrapper custom-scrollbar">
+
+                <!-- ====== Card #1 : B/L 주문신청 ====== -->
+                <section class="page-card">
+                    <header class="page-card-head">
+                        <h2 class="page-card-title">B/L 주문신청</h2>
+                    </header>
+
+                    <div class="search-grid">
+                        <div class="form-cell">
+                            <label class="form-label">고객 <em class="req">*</em></label>
+                            <div class="form-input-set">
+                                <input type="text" class="input-code" value="0001001563">
+                                <input type="text" class="input-name" value="에스케이 하남충전소">
+                                <button type="button" class="btn-search-icon" aria-label="고객 검색"><span class="material-symbols-outlined">search</span></button>
+                            </div>
+                        </div>
+                        <div class="form-cell">
+                            <label class="form-label">판매점</label>
+                            <div class="form-input-set">
+                                <input type="text" class="input-code" placeholder="판매점 코드">
+                                <input type="text" class="input-name" placeholder="판매점명 입력">
+                                <button type="button" class="btn-search-icon" aria-label="판매점 검색"><span class="material-symbols-outlined">search</span></button>
+                            </div>
+                        </div>
+                        <div class="form-cell">
+                            <label class="form-label">수요처</label>
+                            <div class="form-input-set">
+                                <input type="text" class="input-code" placeholder="수요처 코드">
+                                <input type="text" class="input-name" placeholder="수요처명 입력">
+                                <button type="button" class="btn-search-icon" aria-label="수요처 검색"><span class="material-symbols-outlined">search</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-grid second">
+                        <div class="form-cell">
+                            <label class="form-label">주문일</label>
+                            <div class="form-input-set">
+                                <input type="date" value="2026-04-28">
+                            </div>
+                        </div>
+                        <div class="form-cell">
+                            <label class="form-label">배송요청일</label>
+                            <div class="form-input-set">
+                                <input type="date" value="2026-04-29">
+                            </div>
+                        </div>
+                        <div class="search-actions">
+                            <button type="button" class="btn-text-reset" aria-label="입력초기화"><span class="material-symbols-outlined">restart_alt</span></button>
+                            <button type="button" class="btn-orange"><span class="material-symbols-outlined">search</span> 검색</button>
+                        </div>
+                    </div>
+
+                    <div class="page-action-bar">
+                        <p class="notice-text"><span class="ast">*</span> <strong>주문 가능 일시 :</strong> 2026-04-28 PM 5:00:00 까지 입니다. 주문신청 대상 데이터를 선택 후 주문신청 버튼을 클릭해 주세요.</p>
+                        <div class="page-actions">
+                            <button type="button" class="btn-excel"><span class="material-symbols-outlined">grid_on</span> 엑셀 다운로드</button>
+                            <button type="button" class="btn-white">주문누락검토</button>
+                            <button type="button" class="btn-white" id="btnHoldBulk"><span class="material-symbols-outlined">pause_circle</span> 선택 보류</button>
+                            <button type="button" class="btn-orange" id="btnApplyOrder">선택 주문신청</button>
+                        </div>
+                    </div>
+
+                    <!-- AI 추천 요약 배너 -->
+                    <div class="ai-banner">
+                        <div class="ai-banner-icon">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </div>
+                        <div class="ai-banner-text">
+                            <strong>AI 추천 주문 4건</strong>
+                            <span class="ai-banner-meta">
+                                <span class="ai-chip ai-chip-p0">긴급(P0) 2건</span>
+                                <span class="ai-chip ai-chip-p1">주의(P1) 1건</span>
+                                <span class="ai-chip ai-chip-p2">정상(P2) 1건</span>
+                                · 잔량/리드타임/안전재고 분석 결과, 우선 처리 대상입니다.
+                            </span>
+                        </div>
+                        <div class="ai-banner-actions">
+                            <button type="button" class="btn-link-ai" id="btnSelectRecommend"><span class="material-symbols-outlined">checklist</span> 추천 모두 선택</button>
+                        </div>
+                    </div>
+
+                    <div class="ibsheet-wrap">
+                        <table class="ibsheet ibsheet-tank">
+                            <colgroup>
+                                <col style="width:36px;">
+                                <col style="width:52px;">
+                                <col style="width:64px;">
+                                <col style="width:60px;">
+                                <col style="width:160px;">
+                                <col style="width:100px;">
+                                <col style="width:118px;">
+                                <col style="width:200px;">
+                                <col style="width:90px;">
+                                <col style="width:90px;">
+                                <col style="width:74px;">
+                                <col style="width:64px;">
+                                <col style="width:74px;">
+                                <col style="width:96px;">
+                                <col style="width:160px;">
+                                <col style="width:130px;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="th-check"><input type="checkbox" aria-label="전체선택"></th>
+                                    <th rowspan="2">번호</th>
+                                    <th rowspan="2">상태</th>
+                                    <th rowspan="2">신청<br>건수</th>
+                                    <th rowspan="2">구분</th>
+                                    <th rowspan="2">판매점명</th>
+                                    <th rowspan="2">최종수요처<br>코드</th>
+                                    <th rowspan="2">최종수요처명</th>
+                                    <th colspan="7" class="th-group">주문정보</th>
+                                    <th rowspan="2">작업</th>
+                                </tr>
+                                <tr>
+                                    <th>배송요청<br>시기</th>
+                                    <th>주문방식</th>
+                                    <th>제품</th>
+                                    <th>유무취</th>
+                                    <th>혼합<br>여부</th>
+                                    <th class="th-num">주문량(kg)</th>
+                                    <th>요청메시지</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderApplyBody">
+                                <tr class="row-recommend row-recommend-p0 row-selected" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900">
+                                    <td class="td-check"><input type="checkbox" checked></td>
+                                    <td class="td-no">552</td>
+                                    <td class="td-state"><span class="prio-badge prio-p0">P0 긴급</span></td>
+                                    <td class="td-num">1</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">0038292069</td>
+                                    <td class="td-left"><span class="cell-with-ai">(유)신안물산<span class="ai-tag" title="AI 추천">AI</span></span></td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num strong">4,900</td>
+                                    <td class="td-left td-msg">긴급 잔량 부족 · 즉시 출고 권장</td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr class="row-recommend row-recommend-p0" data-customer="해초원/딥앤씨푸드" data-code="0038292070" data-amount="2,900">
+                                    <td class="td-check"><input type="checkbox" checked></td>
+                                    <td class="td-no">553</td>
+                                    <td class="td-state"><span class="prio-badge prio-p0">P0 긴급</span></td>
+                                    <td class="td-num">1</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">0038292070</td>
+                                    <td class="td-left"><span class="cell-with-ai">해초원/딥앤씨푸드<span class="ai-tag" title="AI 추천">AI</span></span></td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num strong">2,900</td>
+                                    <td class="td-left td-msg">리드타임 내 안전재고 미달</td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="성실모터스" data-code="0038292116" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">554</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">0038292116</td>
+                                    <td class="td-left">성실모터스</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="한국지엠(남천안센터)" data-code="1000002223" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">555</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000002223</td>
+                                    <td class="td-left">한국지엠(남천안센터)</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="팀보가(구 오토빌드)" data-code="1000002443" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">556</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000002443</td>
+                                    <td class="td-left">팀보가(구 오토빌드)</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="중앙자동차공업사(서산)" data-code="1000002553" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">557</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000002553</td>
+                                    <td class="td-left">중앙자동차공업사(서산)</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="서령자동차공업사" data-code="1000022129" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">558</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000022129</td>
+                                    <td class="td-left">서령자동차공업사</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr class="row-recommend row-recommend-p2" data-customer="매종클래스 공동주택(충남충전소)" data-code="1000022954" data-amount="2,000">
+                                    <td class="td-check"><input type="checkbox" checked></td>
+                                    <td class="td-no">559</td>
+                                    <td class="td-state"><span class="prio-badge prio-p2">P2 정상</span></td>
+                                    <td class="td-num">1</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000022954</td>
+                                    <td class="td-left"><span class="cell-with-ai">매종클래스 공동주택(충남충전소)<span class="ai-tag" title="AI 추천">AI</span></span></td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">2,000</td>
+                                    <td class="td-left td-msg">통상 주문 주기 도래</td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr class="row-recommend row-recommend-p1" data-customer="대의영어조합법인" data-code="1000028303" data-amount="2,900">
+                                    <td class="td-check"><input type="checkbox" checked></td>
+                                    <td class="td-no">560</td>
+                                    <td class="td-state"><span class="prio-badge prio-p1">P1 주의</span></td>
+                                    <td class="td-num">1</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000028303</td>
+                                    <td class="td-left"><span class="cell-with-ai">대의영어조합법인<span class="ai-tag" title="AI 추천">AI</span></span></td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num strong">2,900</td>
+                                    <td class="td-left td-msg">잔량 30% 이하 도달 예정</td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="대익영어조합" data-code="1000029008" data-amount="0">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">561</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000029008</td>
+                                    <td class="td-left">대익영어조합</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num zero">0</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply" disabled>신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                                <tr data-customer="일신유리" data-code="1000044424" data-amount="1,000">
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">562</td>
+                                    <td class="td-state"><span class="state-mark"></span></td>
+                                    <td class="td-num">0</td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000044424</td>
+                                    <td class="td-left">일신유리</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">1,000</td>
+                                    <td class="td-left td-msg"></td>
+                                    <td class="td-actions">
+                                        <button type="button" class="btn-row btn-row-apply">신청</button>
+                                        <button type="button" class="btn-row btn-row-hold" data-action="hold">보류</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ====== Card #2 : B/L 주문현황 ====== -->
+                <section class="page-card">
+                    <header class="page-card-head">
+                        <h2 class="page-card-title">B/L 주문현황</h2>
+                    </header>
+
+                    <div class="page-action-bar">
+                        <p class="notice-text"><span class="ast">*</span> <strong>(주문일 또는 배송요청일이 오늘부터인 데이터가 조회됩니다.)</strong> 데이터를 선택 후 주문수정 또는 주문삭제 버튼을 클릭해 주세요.</p>
+                        <div class="page-actions">
+                            <button type="button" class="btn-excel"><span class="material-symbols-outlined">grid_on</span> 엑셀 다운로드</button>
+                            <button type="button" class="btn-white">주문수정</button>
+                            <button type="button" class="btn-red">주문삭제</button>
+                        </div>
+                    </div>
+
+                    <div class="ibsheet-wrap">
+                        <table class="ibsheet ibsheet-tank">
+                            <colgroup>
+                                <col style="width:36px;">
+                                <col style="width:52px;">
+                                <col style="width:78px;">
+                                <col style="width:160px;">
+                                <col style="width:100px;">
+                                <col style="width:118px;">
+                                <col style="width:200px;">
+                                <col style="width:90px;">
+                                <col style="width:90px;">
+                                <col style="width:74px;">
+                                <col style="width:64px;">
+                                <col style="width:74px;">
+                                <col style="width:96px;">
+                                <col style="width:120px;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="th-check"><input type="checkbox" aria-label="전체선택"></th>
+                                    <th rowspan="2">번호</th>
+                                    <th rowspan="2">주문상태</th>
+                                    <th rowspan="2">구분</th>
+                                    <th rowspan="2">판매점명</th>
+                                    <th rowspan="2">최종수요처<br>코드</th>
+                                    <th rowspan="2">최종수요처명</th>
+                                    <th colspan="6" class="th-group">주문정보</th>
+                                    <th rowspan="2">주문일시</th>
+                                </tr>
+                                <tr>
+                                    <th>배송요청<br>시기</th>
+                                    <th>주문방식</th>
+                                    <th>제품</th>
+                                    <th>유무취</th>
+                                    <th>혼합<br>여부</th>
+                                    <th class="th-num">주문량(kg)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="row-selected">
+                                    <td class="td-check"><input type="checkbox" checked></td>
+                                    <td class="td-no">552</td>
+                                    <td><span class="status-pill status-pill-done">확정</span></td>
+                                    <td>긴급주문 대상</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">0038292069</td>
+                                    <td class="td-left">(유)신안물산</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num strong">4,900</td>
+                                    <td class="td-mono">2026-04-28 09:12</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">553</td>
+                                    <td><span class="status-pill status-pill-done">확정</span></td>
+                                    <td>긴급주문 대상</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">0038292070</td>
+                                    <td class="td-left">해초원/딥앤씨푸드</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num strong">2,900</td>
+                                    <td class="td-mono">2026-04-28 09:18</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">559</td>
+                                    <td><span class="status-pill status-pill-proc">배차중</span></td>
+                                    <td>잔량 30% 이하</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000022954</td>
+                                    <td class="td-left">매종클래스 공동주택(충남충전소)</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">2,000</td>
+                                    <td class="td-mono">2026-04-28 09:24</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">560</td>
+                                    <td><span class="status-pill status-pill-wait">대기</span></td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000028303</td>
+                                    <td class="td-left">대의영어조합법인</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num">2,900</td>
+                                    <td class="td-mono">2026-04-28 09:31</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-check"><input type="checkbox"></td>
+                                    <td class="td-no">561</td>
+                                    <td><span class="status-pill status-pill-cancel">취소</span></td>
+                                    <td>잔량정보없음(미설치)</td>
+                                    <td>영화에너지</td>
+                                    <td class="td-mono">1000029008</td>
+                                    <td class="td-left">대익영어조합</td>
+                                    <td>일과중</td>
+                                    <td>검침잔량</td>
+                                    <td>프로판</td>
+                                    <td>유취</td>
+                                    <td>아니오</td>
+                                    <td class="td-num zero">0</td>
+                                    <td class="td-mono">2026-04-27 17:42</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+
+            </main>
+        </div>
+
+        <!-- ===================== HOLD MODAL ===================== -->
+        <div class="modal-backdrop" id="holdModal" hidden>
+            <div class="modal-card" role="dialog" aria-labelledby="holdModalTitle" aria-modal="true">
+                <header class="modal-head">
+                    <h3 id="holdModalTitle">주문 보류 처리</h3>
+                    <button type="button" class="modal-close" data-modal-close aria-label="닫기"><span class="material-symbols-outlined">close</span></button>
+                </header>
+                <div class="modal-body">
+                    <div class="hold-target">
+                        <span class="hold-target-label">대상 수요처</span>
+                        <strong class="hold-target-name" id="holdTargetName">-</strong>
+                        <span class="hold-target-meta" id="holdTargetMeta">-</span>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-row-label">보류 사유 <em class="req">*</em></label>
+                        <div class="radio-grid" id="holdReasonGrid">
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="defer" checked>
+                                <span class="radio-card-title">다시 알림</span>
+                                <span class="radio-card-desc">+N일 후 자동 재추천</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="suspend">
+                                <span class="radio-card-title">거래 중단</span>
+                                <span class="radio-card-desc">휴업·공사·행사</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="inactive">
+                                <span class="radio-card-title">비활성</span>
+                                <span class="radio-card-desc">시즌 미사용</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="dataerror">
+                                <span class="radio-card-title">누락 / Data 오류</span>
+                                <span class="radio-card-desc">수기 보정 필요</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="manual">
+                                <span class="radio-card-title">수기 접수</span>
+                                <span class="radio-card-desc">전화 · 팩스 등</span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="hold-reason" value="end">
+                                <span class="radio-card-title">거래 종료</span>
+                                <span class="radio-card-desc">영구 제외</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row form-row-2">
+                        <div>
+                            <label class="form-row-label">적용 기간</label>
+                            <div class="hold-period">
+                                <input type="number" min="1" value="3" id="holdPeriodInput" class="hold-period-input">
+                                <span>일</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-row-label">다음 추천 예정</label>
+                            <div class="hold-next" id="holdNextDate">2026-05-01</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-row-label">메모 <em class="req">*</em></label>
+                        <textarea class="hold-memo" rows="3" placeholder="보류 사유의 상세 내용을 입력해주세요"></textarea>
+                    </div>
+                </div>
+                <footer class="modal-foot">
+                    <button type="button" class="btn-white" data-modal-close>취소</button>
+                    <button type="button" class="btn-orange" id="btnHoldConfirm">저장 및 적용</button>
+                </footer>
+            </div>
+        </div>
+
+        <!-- ===================== FOOTER (full width) ===================== -->
+        <footer class="app-footer">
+            <div class="app-footer-brand">
+                <span class="sk-mark"><strong>SK</strong><small>gas</small></span>
+            </div>
+            <div class="app-footer-content">
+                <div class="footer-left">
+                    <a href="#" class="footer-link footer-link-bold">개인정보처리방침</a>
+                    <span class="copyright">Copyright&copy; SK Gas. All Rights Reserved.</span>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="footer-link">사용자 매뉴얼</a>
+                    <a href="#" class="footer-link">지사현황</a>
+                    <a href="#" class="footer-link">운영자 비상연락망</a>
+                    <div class="footer-select-box">
+                        <select class="footer-select">
+                            <option>외부사이트</option>
+                            <option>SK가스 홈페이지</option>
+                            <option>e-LPG</option>
+                        </select>
+                        <span class="material-symbols-outlined select-arrow">expand_more</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ==========================================
+            // 1. 사이드바 메뉴 active 토글 (즐겨찾기는 항상 노란 별)
+            // ==========================================
+            document.querySelectorAll('.nav-item-1depth').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.nav-item-1depth').forEach((b) => {
+                        if (!b.classList.contains('nav-favorite')) b.classList.remove('active');
+                    });
+                    if (!btn.classList.contains('nav-favorite')) {
+                        btn.classList.add('active');
+                    }
+                });
+            });
+
+            // 플로팅 툴팁 (메뉴 hover)
+            const tooltip = document.createElement('div');
+            tooltip.className = 'floating-tooltip';
+            document.body.appendChild(tooltip);
+
+            document.querySelectorAll('.nav-group').forEach((group) => {
+                group.addEventListener('mouseenter', () => {
+                    const text = group.getAttribute('data-tooltip');
+                    if (!text) return;
+                    tooltip.innerText = text;
+                    tooltip.classList.add('show');
+                    const rect = group.getBoundingClientRect();
+                    tooltip.style.left = `${rect.right + 8}px`;
+                    tooltip.style.top = `${rect.top + (rect.height / 2) - (tooltip.offsetHeight / 2)}px`;
+                });
+                group.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+                group.addEventListener('click', () => tooltip.classList.remove('show'));
+            });
+
+            // ==========================================
+            // 2. ibsheet 행 선택 (디자인 mockup)
+            // ==========================================
+            document.querySelectorAll('.ibsheet tbody tr').forEach((tr) => {
+                tr.addEventListener('click', (e) => {
+                    if (e.target.closest('button, input, a, label')) return;
+                    const cb = tr.querySelector('input[type="checkbox"]');
+                    if (cb) {
+                        cb.checked = !cb.checked;
+                        tr.classList.toggle('row-selected', cb.checked);
+                    } else {
+                        tr.classList.toggle('row-selected');
+                    }
+                });
+                const cb = tr.querySelector('input[type="checkbox"]');
+                if (cb) {
+                    cb.addEventListener('change', () => {
+                        tr.classList.toggle('row-selected', cb.checked);
+                    });
+                }
+            });
+
+            document.querySelectorAll('.pin').forEach((p) => {
+                p.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    p.classList.toggle('pin-on');
+                    p.classList.toggle('pin-off');
+                });
+            });
+
+            // ==========================================
+            // 3. 행 단위 신청 / 보류 액션
+            // ==========================================
+            const orderBody = document.getElementById('orderApplyBody');
+            const holdModal = document.getElementById('holdModal');
+            const holdTargetName = document.getElementById('holdTargetName');
+            const holdTargetMeta = document.getElementById('holdTargetMeta');
+            const holdPeriodInput = document.getElementById('holdPeriodInput');
+            const holdNextDate = document.getElementById('holdNextDate');
+            const btnHoldConfirm = document.getElementById('btnHoldConfirm');
+            const btnHoldBulk = document.getElementById('btnHoldBulk');
+            const btnApply = document.getElementById('btnApplyOrder');
+            const btnSelectRecommend = document.getElementById('btnSelectRecommend');
+
+            let holdContext = { mode: 'single', rows: [] };
+
+            const formatNextDate = (days) => {
+                const d = new Date();
+                d.setDate(d.getDate() + Math.max(parseInt(days, 10) || 0, 0));
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            };
+
+            const updateHoldNext = () => {
+                if (holdNextDate && holdPeriodInput) {
+                    holdNextDate.innerText = formatNextDate(holdPeriodInput.value);
+                }
+            };
+
+            const openHoldModal = (rows) => {
+                if (!holdModal || !rows || !rows.length) return;
+                holdContext = { mode: rows.length === 1 ? 'single' : 'bulk', rows };
+
+                if (rows.length === 1) {
+                    const r = rows[0];
+                    if (holdTargetName) holdTargetName.innerText = r.dataset.customer || '-';
+                    if (holdTargetMeta) holdTargetMeta.innerText = `코드 ${r.dataset.code || '-'} · 주문량 ${r.dataset.amount || '-'} kg`;
+                } else {
+                    if (holdTargetName) holdTargetName.innerText = `${rows.length}건 일괄 보류`;
+                    const total = rows.reduce((sum, r) => sum + (parseInt((r.dataset.amount || '0').replace(/,/g, ''), 10) || 0), 0);
+                    if (holdTargetMeta) holdTargetMeta.innerText = `합계 주문량 ${total.toLocaleString()} kg`;
+                }
+
+                updateHoldNext();
+                holdModal.hidden = false;
+                holdModal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeHoldModal = () => {
+                if (!holdModal) return;
+                holdModal.classList.remove('is-open');
+                holdModal.hidden = true;
+                document.body.style.overflow = '';
+            };
+
+            if (holdPeriodInput) holdPeriodInput.addEventListener('input', updateHoldNext);
+
+            if (holdModal) {
+                holdModal.addEventListener('click', (e) => {
+                    if (e.target.matches('[data-modal-close]') || e.target.closest('[data-modal-close]') || e.target === holdModal) {
+                        closeHoldModal();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && holdModal && !holdModal.hidden) closeHoldModal();
+            });
+
+            if (btnHoldConfirm) {
+                btnHoldConfirm.addEventListener('click', () => {
+                    const reasonInput = document.querySelector('input[name="hold-reason"]:checked');
+                    const reason = reasonInput ? reasonInput.value : 'defer';
+                    holdContext.rows.forEach((row) => {
+                        row.classList.add('row-held');
+                        row.classList.remove('row-recommend-p0', 'row-recommend-p1', 'row-recommend-p2', 'row-selected');
+                        const stateCell = row.querySelector('.td-state');
+                        if (stateCell) stateCell.innerHTML = '<span class="prio-badge prio-hold">보류</span>';
+                        const msgCell = row.querySelector('.td-msg');
+                        if (msgCell) {
+                            const map = {
+                                defer: `다시 알림 (${holdPeriodInput ? holdPeriodInput.value : 3}일 후 재추천)`,
+                                suspend: '거래 중단',
+                                inactive: '비활성',
+                                dataerror: '누락/Data 오류',
+                                manual: '수기 접수',
+                                end: '거래 종료',
+                            };
+                            msgCell.innerText = map[reason] || '보류';
+                        }
+                        const applyBtn = row.querySelector('.btn-row-apply');
+                        if (applyBtn) applyBtn.disabled = true;
+                    });
+                    closeHoldModal();
+                });
+            }
+
+            if (orderBody) {
+                orderBody.addEventListener('click', (e) => {
+                    const holdBtn = e.target.closest('.btn-row-hold');
+                    const applyBtn = e.target.closest('.btn-row-apply');
+
+                    if (holdBtn) {
+                        e.stopPropagation();
+                        const row = holdBtn.closest('tr');
+                        if (row) openHoldModal([row]);
+                        return;
+                    }
+
+                    if (applyBtn) {
+                        e.stopPropagation();
+                        if (applyBtn.disabled) return;
+                        const row = applyBtn.closest('tr');
+                        if (!row) return;
+                        row.classList.add('row-applied');
+                        row.classList.remove('row-held');
+                        const msgCell = row.querySelector('.td-msg');
+                        if (msgCell) msgCell.innerText = '신청 완료 · 주문 현황으로 이동';
+                        applyBtn.disabled = true;
+                        applyBtn.innerText = '완료';
+                        return;
+                    }
+                });
+            }
+
+            if (btnHoldBulk) {
+                btnHoldBulk.addEventListener('click', () => {
+                    const checked = orderBody ? Array.from(orderBody.querySelectorAll('input[type="checkbox"]:checked')).map((c) => c.closest('tr')).filter(Boolean) : [];
+                    if (!checked.length) {
+                        alert('보류 처리할 행을 먼저 선택해 주세요.');
+                        return;
+                    }
+                    openHoldModal(checked);
+                });
+            }
+
+            if (btnApply) {
+                btnApply.addEventListener('click', () => {
+                    const checked = orderBody ? Array.from(orderBody.querySelectorAll('input[type="checkbox"]:checked')).map((c) => c.closest('tr')).filter(Boolean) : [];
+                    if (!checked.length) {
+                        alert('주문신청할 행을 먼저 선택해 주세요.');
+                        return;
+                    }
+                    checked.forEach((row) => {
+                        row.classList.add('row-applied');
+                        row.classList.remove('row-held');
+                        const msgCell = row.querySelector('.td-msg');
+                        if (msgCell) msgCell.innerText = '신청 완료 · 주문 현황으로 이동';
+                        const applyBtn = row.querySelector('.btn-row-apply');
+                        if (applyBtn) {
+                            applyBtn.disabled = true;
+                            applyBtn.innerText = '완료';
+                        }
+                    });
+                    btnApply.classList.add('is-done');
+                    btnApply.innerText = `${checked.length}건 신청완료`;
+                    window.setTimeout(() => {
+                        btnApply.classList.remove('is-done');
+                        btnApply.innerText = '선택 주문신청';
+                    }, 1600);
+                });
+            }
+
+            if (btnSelectRecommend) {
+                btnSelectRecommend.addEventListener('click', () => {
+                    if (!orderBody) return;
+                    orderBody.querySelectorAll('tr').forEach((row) => {
+                        const cb = row.querySelector('input[type="checkbox"]');
+                        if (cb) cb.checked = row.classList.contains('row-recommend');
+                    });
+                });
+            }
+
+            // ==========================================
+            // 3. 탭 UI 동작 로직
+            // ==========================================
+            const tabBar = document.getElementById('tabBar');
+
+            if (!tabBar) return;
+
+            // 탭 클릭 → 활성화
+            tabBar.addEventListener('click', (e) => {
+                const tab = e.target.closest('.tab-item');
+                if (!tab) return;
+
+                // 닫기 버튼 처리
+                if (e.target.classList.contains('tab-close')) {
+                    e.stopPropagation();
+                    // 활성 탭 닫을 경우 이전 탭 활성화
+                    if (tab.classList.contains('active')) {
+                        const allTabs = [...tabBar.querySelectorAll('.tab-item:not(.tab-home)')];
+                        const idx = allTabs.indexOf(tab);
+                        const nextTab = allTabs[idx - 1] || allTabs[idx + 1];
+                        if (nextTab) nextTab.classList.add('active');
+                    }
+                    tab.remove();
+                    return;
+                }
+
+                // 탭 활성화
+                tabBar.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+
+            // 좌측 메뉴 3뎁스 클릭 → 탭 생성 (UI 데모)
+            document.querySelectorAll('.nav-item-3depth, .nav-item-2depth-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const label = link.textContent.trim();
+
+                    // 이미 열린 탭인지 확인
+                    const existing = [...tabBar.querySelectorAll('.tab-item span:not(.material-symbols-outlined)')].find(s => s.textContent === label);
+                    if (existing) {
+                        const existingTab = existing.closest('.tab-item');
+                        tabBar.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                        existingTab.classList.add('active');
+                        return;
+                    }
+
+                    // 새 탭 생성
+                    const newTab = document.createElement('div');
+                    newTab.className = 'tab-item';
+                    newTab.innerHTML = `
+                        <span class="material-symbols-outlined tab-icon">description</span>
+                        <span>${label}</span>
+                        <span class="tab-close material-symbols-outlined">close</span>
+                    `;
+
+                    // + 버튼 앞에 삽입
+                    const addBtn = tabBar.querySelector('.tab-add-btn');
+                    tabBar.insertBefore(newTab, addBtn);
+
+                    // 활성화
+                    tabBar.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                    newTab.classList.add('active');
+
+                    // 스크롤하여 새 탭 보이기
+                    newTab.scrollIntoView({ behavior: 'smooth', inline: 'nearest' });
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

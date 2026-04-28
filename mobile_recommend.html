@@ -41,150 +41,150 @@
             <button class="m-tab" data-filter="held">보류<span class="m-tab-count">0</span></button>
         </div>
 
-        <!-- ORDER CARD LIST (AI 추천만) -->
-        <div class="m-list" id="orderList">
+        <!-- 컬럼 헤더 박스 (이미지 08 형식) -->
+        <div class="m-table-head">
+            <div class="m-th">
+                <span class="m-th-line">배송일</span>
+                <span class="m-th-line">차량번호</span>
+            </div>
+            <div class="m-th">
+                <span class="m-th-line">제품</span>
+                <span class="m-th-line">주문량</span>
+            </div>
+            <div class="m-th">
+                <span class="m-th-line">출하장</span>
+                <span class="m-th-line">진행상태</span>
+            </div>
+            <div class="m-th">
+                <span class="m-th-line">작업</span>
+                <span class="m-th-line">&nbsp;</span>
+            </div>
+        </div>
 
-            <div class="m-card is-recommend-p0" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900" data-prio="p0">
-                <div class="m-card-head">
+        <!-- ORDER CARD LIST (AI 추천만) -->
+        <div class="m-list" id="orderList" style="padding-bottom: 96px;">
+
+            <div class="m-rec-card is-p0" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900" data-prio="p0">
+                <div class="m-rec-meta">
                     <span class="m-prio-badge is-p0">P0 긴급</span>
                     <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-card-no">#552</span>
+                    <span class="m-rec-name">(유)신안물산</span>
+                    <span class="m-rec-code">코드 0038292069</span>
                 </div>
-                <div class="m-card-name">(유)신안물산</div>
-                <div class="m-card-meta">
-                    <span>코드 0038292069</span>
-                    <span>영화에너지</span>
-                    <span>일과중</span>
-                </div>
-                <div class="m-card-info">
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">제품</span>
-                        <span class="m-card-info-value">프로판</span>
+                <div class="m-order-card m-order-card-rec">
+                    <div class="m-order-cell">
+                        <span class="row-1">2026-04-29</span>
+                        <span class="row-2 is-mute">미배차</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">주문량</span>
-                        <span class="m-card-info-value is-red">4,900 kg</span>
+                    <div class="m-order-cell">
+                        <span class="strong">프로판</span>
+                        <span class="num">4,900</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">유취/혼합</span>
-                        <span class="m-card-info-value">유취 / X</span>
+                    <div class="m-order-cell">
+                        <span class="row-1">평택기지</span>
+                        <span class="state-red">P0 긴급</span>
+                    </div>
+                    <div class="m-rec-action-cell">
+                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
                     </div>
                 </div>
-                <div class="m-card-msg">
+                <div class="m-rec-msg">
                     <span class="material-symbols-outlined">priority_high</span>
                     긴급 잔량 부족 · 즉시 출고 권장
                 </div>
-                <div class="m-card-actions">
-                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
-                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
-                </div>
             </div>
 
-            <div class="m-card is-recommend-p0" data-customer="해초원/딥앤씨푸드" data-code="0038292070" data-amount="2,900" data-prio="p0">
-                <div class="m-card-head">
+            <div class="m-rec-card is-p0" data-customer="해초원/딥앤씨푸드" data-code="0038292070" data-amount="2,900" data-prio="p0">
+                <div class="m-rec-meta">
                     <span class="m-prio-badge is-p0">P0 긴급</span>
                     <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-card-no">#553</span>
+                    <span class="m-rec-name">해초원 / 딥앤씨푸드</span>
+                    <span class="m-rec-code">코드 0038292070</span>
                 </div>
-                <div class="m-card-name">해초원 / 딥앤씨푸드</div>
-                <div class="m-card-meta">
-                    <span>코드 0038292070</span>
-                    <span>영화에너지</span>
-                    <span>일과중</span>
-                </div>
-                <div class="m-card-info">
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">제품</span>
-                        <span class="m-card-info-value">프로판</span>
+                <div class="m-order-card m-order-card-rec">
+                    <div class="m-order-cell">
+                        <span class="row-1">2026-04-29</span>
+                        <span class="row-2 is-mute">미배차</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">주문량</span>
-                        <span class="m-card-info-value is-red">2,900 kg</span>
+                    <div class="m-order-cell">
+                        <span class="strong">프로판</span>
+                        <span class="num">2,900</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">유취/혼합</span>
-                        <span class="m-card-info-value">유취 / X</span>
+                    <div class="m-order-cell">
+                        <span class="row-1">평택기지</span>
+                        <span class="state-red">P0 긴급</span>
+                    </div>
+                    <div class="m-rec-action-cell">
+                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
                     </div>
                 </div>
-                <div class="m-card-msg">
+                <div class="m-rec-msg">
                     <span class="material-symbols-outlined">priority_high</span>
                     리드타임 내 안전재고 미달
                 </div>
-                <div class="m-card-actions">
-                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
-                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
-                </div>
             </div>
 
-            <div class="m-card is-recommend-p1" data-customer="대의영어조합법인" data-code="1000028303" data-amount="2,900" data-prio="p1">
-                <div class="m-card-head">
+            <div class="m-rec-card is-p1" data-customer="대의영어조합법인" data-code="1000028303" data-amount="2,900" data-prio="p1">
+                <div class="m-rec-meta">
                     <span class="m-prio-badge is-p1">P1 주의</span>
                     <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-card-no">#560</span>
+                    <span class="m-rec-name">대의영어조합법인</span>
+                    <span class="m-rec-code">코드 1000028303</span>
                 </div>
-                <div class="m-card-name">대의영어조합법인</div>
-                <div class="m-card-meta">
-                    <span>코드 1000028303</span>
-                    <span>영화에너지</span>
-                    <span>일과중</span>
-                </div>
-                <div class="m-card-info">
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">제품</span>
-                        <span class="m-card-info-value">프로판</span>
+                <div class="m-order-card m-order-card-rec">
+                    <div class="m-order-cell">
+                        <span class="row-1">2026-04-29</span>
+                        <span class="row-2 is-mute">미배차</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">주문량</span>
-                        <span class="m-card-info-value is-orange">2,900 kg</span>
+                    <div class="m-order-cell">
+                        <span class="strong">프로판</span>
+                        <span class="num">2,900</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">유취/혼합</span>
-                        <span class="m-card-info-value">유취 / X</span>
+                    <div class="m-order-cell">
+                        <span class="row-1">평택기지</span>
+                        <span class="state-orange">P1 주의</span>
+                    </div>
+                    <div class="m-rec-action-cell">
+                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
                     </div>
                 </div>
-                <div class="m-card-msg">
+                <div class="m-rec-msg">
                     <span class="material-symbols-outlined">trending_down</span>
                     잔량 30% 이하 도달 예정
                 </div>
-                <div class="m-card-actions">
-                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
-                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
-                </div>
             </div>
 
-            <div class="m-card is-recommend-p2" data-customer="매종클래스 공동주택" data-code="1000022954" data-amount="2,000" data-prio="p2">
-                <div class="m-card-head">
+            <div class="m-rec-card is-p2" data-customer="매종클래스 공동주택" data-code="1000022954" data-amount="2,000" data-prio="p2">
+                <div class="m-rec-meta">
                     <span class="m-prio-badge is-p2">P2 정상</span>
                     <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-card-no">#559</span>
+                    <span class="m-rec-name">매종클래스 공동주택 (충남충전소)</span>
+                    <span class="m-rec-code">코드 1000022954</span>
                 </div>
-                <div class="m-card-name">매종클래스 공동주택<br><small style="font-weight:500; color:#5A6473;">(충남충전소)</small></div>
-                <div class="m-card-meta">
-                    <span>코드 1000022954</span>
-                    <span>영화에너지</span>
-                    <span>일과중</span>
-                </div>
-                <div class="m-card-info">
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">제품</span>
-                        <span class="m-card-info-value">프로판</span>
+                <div class="m-order-card m-order-card-rec">
+                    <div class="m-order-cell">
+                        <span class="row-1">2026-04-29</span>
+                        <span class="row-2 is-mute">미배차</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">주문량</span>
-                        <span class="m-card-info-value">2,000 kg</span>
+                    <div class="m-order-cell">
+                        <span class="strong">프로판</span>
+                        <span class="num">2,000</span>
                     </div>
-                    <div class="m-card-info-item">
-                        <span class="m-card-info-label">유취/혼합</span>
-                        <span class="m-card-info-value">유취 / X</span>
+                    <div class="m-order-cell">
+                        <span class="row-1">평택기지</span>
+                        <span class="state-blue">P2 정상</span>
+                    </div>
+                    <div class="m-rec-action-cell">
+                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
                     </div>
                 </div>
-                <div class="m-card-msg">
+                <div class="m-rec-msg">
                     <span class="material-symbols-outlined">schedule</span>
                     통상 주문 주기 도래
-                </div>
-                <div class="m-card-actions">
-                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
-                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
                 </div>
             </div>
 

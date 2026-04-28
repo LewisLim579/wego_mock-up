@@ -17,15 +17,20 @@
         t._tid = setTimeout(function () { t.classList.remove('is-show'); }, ms || 1800);
     }
 
+    // 카드 셀렉터: 신규 추천 카드(.m-rec-card) + 기존 카드(.m-card) 모두 호환
+    function findCardFromBtn(btn) {
+        return btn.closest('.m-rec-card') || btn.closest('.m-card');
+    }
+
     // ---------- 카드 행 액션 (신청 / 보류) ----------
     function initOrderActions() {
         var list = document.getElementById('orderList');
         if (!list) return;
 
         list.addEventListener('click', function (e) {
-            var btn = e.target.closest('.m-card-btn');
+            var btn = e.target.closest('.m-rec-btn, .m-card-btn');
             if (!btn) return;
-            var card = btn.closest('.m-card');
+            var card = findCardFromBtn(btn);
             if (!card) return;
 
             var action = btn.getAttribute('data-action');
@@ -37,64 +42,121 @@
         });
     }
 
+    function isRecCard(card) {
+        return card.classList.contains('m-rec-card');
+    }
+
     function applyCard(card, btn) {
         if (card.classList.contains('is-applied')) return;
-        card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-held');
+        card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-p0', 'is-p1', 'is-p2', 'is-held');
         card.classList.add('is-applied');
 
-        // 우선순위 뱃지를 신청완료로 교체
-        var head = card.querySelector('.m-card-head');
-        if (head) {
-            var prio = head.querySelector('.m-prio-badge');
-            if (prio) prio.remove();
-            var ai = head.querySelector('.m-ai-tag');
-            if (ai) ai.remove();
-            var done = document.createElement('span');
-            done.className = 'm-prio-badge is-done-blue';
-            done.innerText = '신청 완료';
-            head.insertBefore(done, head.firstChild);
-        }
-
-        // 액션 버튼 비활성화
-        var actions = card.querySelector('.m-card-actions');
-        if (actions) {
-            actions.innerHTML = '<button class="m-card-btn is-secondary" disabled>신청 완료</button>';
+        if (isRecCard(card)) {
+            // 새 추천 카드: 메타 행의 우선순위/AI 태그 → 신청 완료 뱃지
+            var meta = card.querySelector('.m-rec-meta');
+            if (meta) {
+                var prio = meta.querySelector('.m-prio-badge');
+                if (prio) prio.remove();
+                var ai = meta.querySelector('.m-ai-tag');
+                if (ai) ai.remove();
+                var done = document.createElement('span');
+                done.className = 'm-prio-badge is-done-blue';
+                done.innerText = '신청 완료';
+                meta.insertBefore(done, meta.firstChild);
+            }
+            // 진행상태 셀(3번째 컬럼 마지막 row) 갱신
+            var stateCell = card.querySelector('.m-order-card-rec .m-order-cell:nth-child(3) .state-red, .m-order-card-rec .m-order-cell:nth-child(3) .state-orange, .m-order-card-rec .m-order-cell:nth-child(3) .state-blue');
+            if (stateCell) {
+                stateCell.className = 'state-red';
+                stateCell.style.color = '#16A34A';
+                stateCell.innerText = '신청완료';
+            }
+            // 액션 셀: 신청 비활성, 보류는 그대로
+            var applyBtn = card.querySelector('.m-rec-btn.is-apply');
+            if (applyBtn) {
+                applyBtn.disabled = true;
+                applyBtn.innerText = '완료';
+            }
+        } else {
+            // 기존 카드 호환
+            var head = card.querySelector('.m-card-head');
+            if (head) {
+                var prio2 = head.querySelector('.m-prio-badge');
+                if (prio2) prio2.remove();
+                var ai2 = head.querySelector('.m-ai-tag');
+                if (ai2) ai2.remove();
+                var done2 = document.createElement('span');
+                done2.className = 'm-prio-badge is-done-blue';
+                done2.innerText = '신청 완료';
+                head.insertBefore(done2, head.firstChild);
+            }
+            var actions = card.querySelector('.m-card-actions');
+            if (actions) {
+                actions.innerHTML = '<button class="m-card-btn is-secondary" disabled>신청 완료</button>';
+            }
         }
 
         showToast('주문이 신청되었습니다');
     }
 
     function holdCard(card, reasonText, days) {
-        card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-applied');
+        card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-p0', 'is-p1', 'is-p2', 'is-applied');
         card.classList.add('is-held');
 
-        var head = card.querySelector('.m-card-head');
-        if (head) {
-            var prio = head.querySelector('.m-prio-badge');
-            if (prio) prio.remove();
-            var ai = head.querySelector('.m-ai-tag');
-            if (ai) ai.remove();
-            var done = document.createElement('span');
-            done.className = 'm-prio-badge is-hold';
-            done.innerText = '보류';
-            head.insertBefore(done, head.firstChild);
-        }
-
-        var msg = card.querySelector('.m-card-msg');
-        if (!msg) {
-            msg = document.createElement('div');
-            msg.className = 'm-card-msg';
-            msg.innerHTML = '<span class="material-symbols-outlined">pause_circle</span>';
-            var actions = card.querySelector('.m-card-actions');
-            if (actions) card.insertBefore(msg, actions);
-            else card.appendChild(msg);
-        }
-        msg.innerHTML = '<span class="material-symbols-outlined">pause_circle</span>' +
-            (days ? reasonText + ' (' + days + '일 후 재추천)' : reasonText);
-
-        var actions = card.querySelector('.m-card-actions');
-        if (actions) {
-            actions.innerHTML = '<button class="m-card-btn is-secondary" disabled>보류 처리됨</button>';
+        if (isRecCard(card)) {
+            var meta = card.querySelector('.m-rec-meta');
+            if (meta) {
+                var prio = meta.querySelector('.m-prio-badge');
+                if (prio) prio.remove();
+                var ai = meta.querySelector('.m-ai-tag');
+                if (ai) ai.remove();
+                var hold = document.createElement('span');
+                hold.className = 'm-prio-badge is-hold';
+                hold.innerText = '보류';
+                meta.insertBefore(hold, meta.firstChild);
+            }
+            var msgEl = card.querySelector('.m-rec-msg');
+            if (msgEl) {
+                msgEl.innerHTML = '<span class="material-symbols-outlined">pause_circle</span>' +
+                    (days ? reasonText + ' (' + days + '일 후 재추천)' : reasonText);
+            }
+            // 진행상태 셀 갱신
+            var stateCell = card.querySelector('.m-order-card-rec .m-order-cell:nth-child(3) span:last-child');
+            if (stateCell) {
+                stateCell.className = 'state-gray';
+                stateCell.innerText = '보류';
+            }
+            var applyBtn = card.querySelector('.m-rec-btn.is-apply');
+            if (applyBtn) { applyBtn.disabled = true; applyBtn.innerText = '신청'; }
+            var holdBtn = card.querySelector('.m-rec-btn.is-hold');
+            if (holdBtn) { holdBtn.disabled = true; holdBtn.innerText = '처리됨'; }
+        } else {
+            // 기존 카드 호환
+            var head = card.querySelector('.m-card-head');
+            if (head) {
+                var prio2 = head.querySelector('.m-prio-badge');
+                if (prio2) prio2.remove();
+                var ai2 = head.querySelector('.m-ai-tag');
+                if (ai2) ai2.remove();
+                var hold2 = document.createElement('span');
+                hold2.className = 'm-prio-badge is-hold';
+                hold2.innerText = '보류';
+                head.insertBefore(hold2, head.firstChild);
+            }
+            var msg = card.querySelector('.m-card-msg');
+            if (!msg) {
+                msg = document.createElement('div');
+                msg.className = 'm-card-msg';
+                var actions = card.querySelector('.m-card-actions');
+                if (actions) card.insertBefore(msg, actions);
+                else card.appendChild(msg);
+            }
+            msg.innerHTML = '<span class="material-symbols-outlined">pause_circle</span>' +
+                (days ? reasonText + ' (' + days + '일 후 재추천)' : reasonText);
+            var actions2 = card.querySelector('.m-card-actions');
+            if (actions2) {
+                actions2.innerHTML = '<button class="m-card-btn is-secondary" disabled>보류 처리됨</button>';
+            }
         }
     }
 
@@ -197,13 +259,18 @@
     }
 
     function applyFilter(filter) {
-        var cards = document.querySelectorAll('#orderList .m-card');
+        var cards = document.querySelectorAll('#orderList .m-rec-card, #orderList .m-card');
         cards.forEach(function (c) {
+            var prio = c.dataset.prio || '';
             var show = true;
-            if (filter === 'recommend') {
-                show = c.classList.contains('is-recommend-p0') ||
-                       c.classList.contains('is-recommend-p1') ||
-                       c.classList.contains('is-recommend-p2');
+            if (filter === 'all') {
+                show = true;
+            } else if (filter === 'recommend-p0') {
+                show = prio === 'p0' || c.classList.contains('is-p0') || c.classList.contains('is-recommend-p0');
+            } else if (filter === 'recommend-p1') {
+                show = prio === 'p1' || c.classList.contains('is-p1') || c.classList.contains('is-recommend-p1');
+            } else if (filter === 'recommend-p2') {
+                show = prio === 'p2' || c.classList.contains('is-p2') || c.classList.contains('is-recommend-p2');
             } else if (filter === 'held') {
                 show = c.classList.contains('is-held');
             }

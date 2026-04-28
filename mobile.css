@@ -119,6 +119,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 20;
+    min-height: 56px;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
 }
 
 .m-header-btn {
@@ -608,12 +610,12 @@ body {
 
 /* =========================================
    FIXED BOTTOM BAR (action bar)
+   sticky 로 두어 phone-screen 스크롤 컨테이너 바닥에 항상 고정
 ========================================= */
 .m-bottom-bar {
-    position: absolute;
-    left: 0;
-    right: 0;
+    position: sticky;
     bottom: 0;
+    margin-top: auto;
     padding: 12px 14px 16px;
     display: flex;
     gap: 10px;
@@ -621,6 +623,7 @@ body {
     border-top: 1px solid var(--m-border);
     box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.06);
     z-index: 30;
+    flex-shrink: 0;
 }
 .m-bottom-btn {
     flex: 1;

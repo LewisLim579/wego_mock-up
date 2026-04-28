@@ -392,11 +392,10 @@ body {
    ORDER CARD LIST
 ========================================= */
 .m-list {
-    padding: 0 14px;
+    padding: 0 14px 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding-bottom: 96px;
 }
 
 .m-card {
@@ -611,20 +610,19 @@ body {
 
 /* =========================================
    FIXED BOTTOM BAR (action bar)
-   sticky 로 두어 phone-screen 스크롤 컨테이너 바닥에 항상 고정
+   .phone-frame 의 마지막 자식으로 두면 flex column 구조에서 항상 바닥
 ========================================= */
 .m-bottom-bar {
-    position: sticky;
-    bottom: 0;
-    margin-top: auto;
-    padding: 12px 14px 16px;
+    position: relative;
+    flex-shrink: 0;
+    padding: 12px 14px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     display: flex;
     gap: 10px;
     background: var(--m-card-bg);
     border-top: 1px solid var(--m-border);
     box-shadow: 0 -4px 14px rgba(15, 23, 42, 0.06);
     z-index: 30;
-    flex-shrink: 0;
 }
 .m-bottom-btn {
     flex: 1;
@@ -636,6 +634,10 @@ body {
     cursor: pointer;
     color: #fff;
     transition: transform .1s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .m-bottom-btn:active { transform: scale(0.98); }
 .m-bottom-btn.is-red { background: var(--m-red); }
@@ -1201,22 +1203,22 @@ body {
     margin: 0 14px 10px;
     background: #fff;
     border-radius: var(--m-radius);
-    box-shadow: var(--m-shadow-card);
     overflow: hidden;
-    border-left: 4px solid #D8DEE7;
+    /* 좌측 컬러 라인은 inset shadow 로 — 그리드 폭에 영향 X */
+    box-shadow: var(--m-shadow-card), inset 4px 0 0 #D8DEE7;
 }
-.m-rec-card.is-p0 { border-left-color: var(--m-red); }
-.m-rec-card.is-p1 { border-left-color: var(--m-orange); }
-.m-rec-card.is-p2 { border-left-color: var(--m-blue); }
-.m-rec-card.is-held { background: #F4F5F7; }
-.m-rec-card.is-applied { background: #ECFDF3; border-left-color: #16A34A; }
+.m-rec-card.is-p0 { box-shadow: var(--m-shadow-card), inset 4px 0 0 var(--m-red); }
+.m-rec-card.is-p1 { box-shadow: var(--m-shadow-card), inset 4px 0 0 var(--m-orange); }
+.m-rec-card.is-p2 { box-shadow: var(--m-shadow-card), inset 4px 0 0 var(--m-blue); }
+.m-rec-card.is-held { background: #F4F5F7; box-shadow: var(--m-shadow-card), inset 4px 0 0 #9CA3AF; }
+.m-rec-card.is-applied { background: #ECFDF3; box-shadow: var(--m-shadow-card), inset 4px 0 0 #16A34A; }
 
 .m-rec-meta {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 10px 12px 8px;
+    padding: 10px 12px 8px 16px;
 }
 .m-rec-name {
     font-size: 13px;
@@ -1241,6 +1243,7 @@ body {
     border-top: 1px solid #EEF1F5;
     background: #FBFCFE;
     grid-template-columns: 1.05fr 0.85fr 1.05fr 60px;
+    padding-left: 4px;
 }
 
 /* 액션 셀 (4번째 컬럼: 보류/신청 작은 버튼) */
@@ -1286,7 +1289,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 12px 10px;
+    padding: 8px 12px 10px 16px;
     font-size: 11.5px;
     color: var(--m-text-sub);
     background: #FFF8F2;

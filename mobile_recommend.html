@@ -62,7 +62,7 @@
         </div>
 
         <!-- ORDER CARD LIST (AI 추천만) -->
-        <div class="m-list" id="orderList" style="padding-bottom: 96px;">
+        <div class="m-list" id="orderList">
 
             <div class="m-rec-card is-p0" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900" data-prio="p0">
                 <div class="m-rec-meta">
@@ -190,12 +190,6 @@
 
         </div>
 
-        <!-- BOTTOM ACTION BAR -->
-        <div class="m-bottom-bar">
-            <a href="mobile_order.html" class="m-bottom-btn is-red" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">LPG주문신청</a>
-            <a href="mobile_status.html" class="m-bottom-btn is-orange" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">LPG주문현황</a>
-        </div>
-
         <!-- TOAST -->
         <div class="m-toast" id="toast"></div>
 
@@ -266,6 +260,12 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- BOTTOM ACTION BAR (phone-frame 직속 — 항상 바닥 고정) -->
+    <div class="m-bottom-bar">
+        <a href="mobile_order.html" class="m-bottom-btn is-red">LPG주문신청</a>
+        <a href="mobile_status.html" class="m-bottom-btn is-orange">LPG주문현황</a>
     </div>
 </div>
 <script src="mobile.js"></script>

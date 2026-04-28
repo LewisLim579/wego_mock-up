@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#EEF2F7">
+<title>LPG주문 신청 · WEGO+</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+<div class="phone-frame">
+    <div class="phone-screen">
+
+        <!-- HEADER -->
+        <header class="m-header">
+            <a href="mobile.html" class="m-header-btn" aria-label="뒤로"><span class="material-symbols-outlined">arrow_back_ios_new</span></a>
+            <div class="m-header-title">LPG주문 신청</div>
+            <a href="mobile.html" class="m-header-btn" aria-label="홈"><span class="material-symbols-outlined">home</span></a>
+        </header>
+
+        <!-- SEARCH -->
+        <div class="m-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="고객사를 입력해 주세요." value="">
+        </div>
+
+        <!-- AI BANNER -->
+        <div class="m-ai-banner">
+            <div class="m-ai-icon"><span class="material-symbols-outlined">auto_awesome</span></div>
+            <div class="m-ai-text">
+                <strong>AI 추천 주문 4건</strong>
+                <div class="m-ai-meta">
+                    <span class="m-chip m-chip-p0">P0 2</span>
+                    <span class="m-chip m-chip-p1">P1 1</span>
+                    <span class="m-chip m-chip-p2">P2 1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="m-tabs">
+            <button class="m-tab is-active" data-filter="all">전체<span class="m-tab-count">11</span></button>
+            <button class="m-tab" data-filter="recommend">추천<span class="m-tab-count">4</span></button>
+            <button class="m-tab" data-filter="held">보류<span class="m-tab-count">0</span></button>
+        </div>
+
+        <!-- ORDER CARD LIST -->
+        <div class="m-list" id="orderList">
+
+            <!-- 552 P0 -->
+            <div class="m-card is-recommend-p0" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900" data-prio="p0">
+                <div class="m-card-head">
+                    <span class="m-prio-badge is-p0">P0 긴급</span>
+                    <span class="m-ai-tag">AI 추천</span>
+                    <span class="m-card-no">#552</span>
+                </div>
+                <div class="m-card-name">(유)신안물산</div>
+                <div class="m-card-meta">
+                    <span>코드 0038292069</span>
+                    <span>영화에너지</span>
+                    <span>일과중</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value is-red">4,900 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-msg">
+                    <span class="material-symbols-outlined">priority_high</span>
+                    긴급 잔량 부족 · 즉시 출고 권장
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <!-- 553 P0 -->
+            <div class="m-card is-recommend-p0" data-customer="해초원/딥앤씨푸드" data-code="0038292070" data-amount="2,900" data-prio="p0">
+                <div class="m-card-head">
+                    <span class="m-prio-badge is-p0">P0 긴급</span>
+                    <span class="m-ai-tag">AI 추천</span>
+                    <span class="m-card-no">#553</span>
+                </div>
+                <div class="m-card-name">해초원 / 딥앤씨푸드</div>
+                <div class="m-card-meta">
+                    <span>코드 0038292070</span>
+                    <span>영화에너지</span>
+                    <span>일과중</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value is-red">2,900 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-msg">
+                    <span class="material-symbols-outlined">priority_high</span>
+                    리드타임 내 안전재고 미달
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <!-- 560 P1 -->
+            <div class="m-card is-recommend-p1" data-customer="대의영어조합법인" data-code="1000028303" data-amount="2,900" data-prio="p1">
+                <div class="m-card-head">
+                    <span class="m-prio-badge is-p1">P1 주의</span>
+                    <span class="m-ai-tag">AI 추천</span>
+                    <span class="m-card-no">#560</span>
+                </div>
+                <div class="m-card-name">대의영어조합법인</div>
+                <div class="m-card-meta">
+                    <span>코드 1000028303</span>
+                    <span>영화에너지</span>
+                    <span>일과중</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value is-orange">2,900 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-msg">
+                    <span class="material-symbols-outlined">trending_down</span>
+                    잔량 30% 이하 도달 예정
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <!-- 559 P2 -->
+            <div class="m-card is-recommend-p2" data-customer="매종클래스 공동주택" data-code="1000022954" data-amount="2,000" data-prio="p2">
+                <div class="m-card-head">
+                    <span class="m-prio-badge is-p2">P2 정상</span>
+                    <span class="m-ai-tag">AI 추천</span>
+                    <span class="m-card-no">#559</span>
+                </div>
+                <div class="m-card-name">매종클래스 공동주택<br><small style="font-weight:500; color:#5A6473;">(충남충전소)</small></div>
+                <div class="m-card-meta">
+                    <span>코드 1000022954</span>
+                    <span>영화에너지</span>
+                    <span>일과중</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value">2,000 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-msg">
+                    <span class="material-symbols-outlined">schedule</span>
+                    통상 주문 주기 도래
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <!-- 일반 주문 (추천 X) -->
+            <div class="m-card" data-customer="성실모터스" data-code="0038292116" data-amount="1,000">
+                <div class="m-card-head">
+                    <span class="m-card-no">#554</span>
+                </div>
+                <div class="m-card-name">성실모터스</div>
+                <div class="m-card-meta">
+                    <span>코드 0038292116</span>
+                    <span>영화에너지</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value">1,000 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <div class="m-card" data-customer="한국지엠(남천안센터)" data-code="1000002223" data-amount="1,000">
+                <div class="m-card-head">
+                    <span class="m-card-no">#555</span>
+                </div>
+                <div class="m-card-name">한국지엠 (남천안센터)</div>
+                <div class="m-card-meta">
+                    <span>코드 1000002223</span>
+                    <span>영화에너지</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value">1,000 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+            <div class="m-card" data-customer="일신유리" data-code="1000044424" data-amount="1,000">
+                <div class="m-card-head">
+                    <span class="m-card-no">#562</span>
+                </div>
+                <div class="m-card-name">일신유리</div>
+                <div class="m-card-meta">
+                    <span>코드 1000044424</span>
+                    <span>영화에너지</span>
+                </div>
+                <div class="m-card-info">
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">제품</span>
+                        <span class="m-card-info-value">프로판</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">주문량</span>
+                        <span class="m-card-info-value">1,000 kg</span>
+                    </div>
+                    <div class="m-card-info-item">
+                        <span class="m-card-info-label">유취/혼합</span>
+                        <span class="m-card-info-value">유취 / X</span>
+                    </div>
+                </div>
+                <div class="m-card-actions">
+                    <button class="m-card-btn is-secondary" data-action="hold">보류</button>
+                    <button class="m-card-btn is-primary" data-action="apply">주문 신청</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM ACTION BAR (이미지처럼 두 개 큰 버튼) -->
+        <div class="m-bottom-bar">
+            <a href="mobile_order.html" class="m-bottom-btn is-red" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">LPG주문신청</a>
+            <a href="mobile_status.html" class="m-bottom-btn is-orange" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">LPG주문현황</a>
+        </div>
+
+        <!-- TOAST -->
+        <div class="m-toast" id="toast"></div>
+
+        <!-- BOTTOM SHEET MODAL (보류 사유) -->
+        <div class="m-sheet-backdrop" id="holdSheet">
+            <div class="m-sheet">
+                <div class="m-sheet-handle"></div>
+                <div class="m-sheet-head">
+                    <h3>보류 사유 선택</h3>
+                    <button class="m-sheet-close" data-sheet-close aria-label="닫기">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <div class="m-sheet-body">
+                    <div class="m-sheet-target">
+                        <div class="m-sheet-target-name" id="sheetTargetName">-</div>
+                        <div class="m-sheet-target-meta" id="sheetTargetMeta">-</div>
+                    </div>
+
+                    <label class="m-sheet-label">보류 사유 <em class="req">*</em></label>
+                    <div class="m-reason-grid">
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="defer" checked>
+                            <span class="m-reason-card-title">다시 알림</span>
+                            <span class="m-reason-card-desc">+N일 후 자동 재추천</span>
+                        </label>
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="suspend">
+                            <span class="m-reason-card-title">거래 중단</span>
+                            <span class="m-reason-card-desc">휴업·공사·행사</span>
+                        </label>
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="inactive">
+                            <span class="m-reason-card-title">비활성</span>
+                            <span class="m-reason-card-desc">시즌 미사용</span>
+                        </label>
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="dataerror">
+                            <span class="m-reason-card-title">누락/오류</span>
+                            <span class="m-reason-card-desc">수기 보정 필요</span>
+                        </label>
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="manual">
+                            <span class="m-reason-card-title">수기 접수</span>
+                            <span class="m-reason-card-desc">전화·팩스 등</span>
+                        </label>
+                        <label class="m-reason-card">
+                            <input type="radio" name="m-reason" value="end">
+                            <span class="m-reason-card-title">거래 종료</span>
+                            <span class="m-reason-card-desc">영구 제외</span>
+                        </label>
+                    </div>
+
+                    <label class="m-sheet-label">적용 기간</label>
+                    <div class="m-period-row">
+                        <input type="number" min="1" value="3" id="sheetPeriod" class="m-period-input">
+                        <span>일</span>
+                        <span class="m-period-next" id="sheetNext">2026-05-01</span>
+                    </div>
+
+                    <label class="m-sheet-label">메모 <em class="req">*</em></label>
+                    <textarea class="m-memo" placeholder="보류 사유의 상세 내용을 입력해 주세요" rows="3"></textarea>
+                </div>
+                <div class="m-sheet-foot">
+                    <button class="m-sheet-btn is-cancel" data-sheet-close>취소</button>
+                    <button class="m-sheet-btn is-confirm" id="sheetConfirm">저장 및 적용</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="mobile.js"></script>
+</body>
+</html>

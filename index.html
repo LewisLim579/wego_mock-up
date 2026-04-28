@@ -2,10 +2,54 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=tab_layout.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WEGO 2.0 · 주문자동화 mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="mobile.css">
+<style>
+    body {
+        background: linear-gradient(135deg, #FBF6F2 0%, #FDF1E5 100%);
+        align-items: stretch;
+        justify-content: stretch;
+        padding: 0;
+    }
+    .phone-frame { display: none; }
+</style>
 </head>
 <body>
-<p>이동 중... 자동으로 이동되지 않으면 <a href="tab_layout.html">여기를 클릭</a>하세요.</p>
+<main class="landing-wrap">
+    <div class="landing-logo">wego<span>+</span> 2.0</div>
+    <p class="landing-sub">
+        SK가스 충전소용 AI 주문 추천 / 보류 / 주문신청 mockup입니다.<br>
+        보고 싶은 화면 버전을 선택해 주세요.
+    </p>
+
+    <div class="landing-grid">
+        <a class="landing-card" href="tab_layout.html">
+            <div class="landing-card-icon"><span class="material-symbols-outlined">monitor</span></div>
+            <h2>데스크톱 (운영자)</h2>
+            <p>
+                B/L 주문신청 · 주문현황 통합 화면.<br>
+                AI 추천 배너, 우선순위 뱃지(P0/P1/P2), 행 단위 신청·보류 액션, 보류 사유 모달까지 데스크톱 운영 워크플로우 전체.
+            </p>
+            <span class="landing-card-cta">데스크톱 화면 열기 <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></span>
+        </a>
+
+        <a class="landing-card" href="mobile.html">
+            <div class="landing-card-icon"><span class="material-symbols-outlined">smartphone</span></div>
+            <h2>모바일 (충전소 / 기사)</h2>
+            <p>
+                홈 메뉴 그리드 → LPG주문 신청 → 추천 카드 + 바텀시트 보류 처리.<br>
+                기사·소장이 한 손으로 주문을 결정할 수 있는 별도 모바일 페이지.
+            </p>
+            <span class="landing-card-cta">모바일 화면 열기 <span class="material-symbols-outlined" style="font-size:16px;">arrow_forward</span></span>
+        </a>
+    </div>
+
+    <p class="landing-foot">
+        Source · <a href="https://github.com/LewisLim579/wego_mock-up" target="_blank">github.com/LewisLim579/wego_mock-up</a>
+    </p>
+</main>
 </body>
 </html>

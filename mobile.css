@@ -75,7 +75,8 @@ body {
 }
 
 .phone-screen {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
     background: var(--m-bg);
@@ -1029,27 +1030,20 @@ body {
     grid-template-columns: 1.05fr 0.85fr 1.05fr 60px;
     overflow: hidden;
     border: 1px solid #D8DEE7;
-    position: sticky;
-    top: 60px;
-    z-index: 10;
     box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
 }
 .m-th {
-    padding: 10px 6px;
+    padding: 12px 6px;
     text-align: center;
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--m-text);
     font-weight: 700;
     border-right: 1px solid #D8DEE7;
     line-height: 1.55;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    align-items: center;
-    justify-content: center;
 }
 .m-th:last-child { border-right: none; }
-.m-th-sub {
+.m-th-line {
+    display: block;
     color: var(--m-text);
     font-weight: 700;
 }

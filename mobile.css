@@ -1305,3 +1305,259 @@ body {
 
 /* 셀 보조 표기 */
 .m-order-cell .row-2.is-mute { color: var(--m-text-mute); }
+
+/* =========================================
+   거래처 그룹 (CUS_CD 단위 카드)
+   - AI 인터페이스 응답 구조 반영:
+     1 거래처(CUS_CD) → N 수요처(ENDUSER_CD)
+========================================= */
+.m-cust-group {
+    margin: 0 14px 14px;
+    background: #fff;
+    border-radius: var(--m-radius);
+    overflow: hidden;
+    box-shadow: var(--m-shadow-card);
+    border: 1px solid var(--m-border);
+}
+
+.m-cust-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 10px;
+    background: linear-gradient(135deg, #F4F8FE 0%, #FFFFFF 60%);
+    border-bottom: 1px solid var(--m-border);
+}
+.m-cust-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--m-blue-light);
+    color: var(--m-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.m-cust-icon .material-symbols-outlined {
+    font-size: 22px;
+    font-variation-settings: 'wght' 600;
+}
+.m-cust-info {
+    flex: 1;
+    min-width: 0;
+}
+.m-cust-name {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--m-text);
+    line-height: 1.3;
+    margin-bottom: 3px;
+    word-break: keep-all;
+}
+.m-cust-meta {
+    font-size: 11px;
+    color: var(--m-text-sub);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+.m-cust-dot { color: var(--m-text-mute); }
+.m-cust-count {
+    flex-shrink: 0;
+    align-self: flex-start;
+    background: var(--m-orange-light);
+    color: var(--m-orange-dark);
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #FBD9A8;
+}
+
+/* 거래처 단위 일괄 액션 */
+.m-cust-actions {
+    display: flex;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #FBFCFE;
+    border-bottom: 1px solid var(--m-border);
+}
+.m-cust-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 7px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: 1px solid;
+    cursor: pointer;
+    background: #fff;
+    line-height: 1;
+}
+.m-cust-btn:active { transform: scale(0.97); }
+.m-cust-btn .material-symbols-outlined { font-size: 14px; }
+.m-cust-btn.is-bulk-hold {
+    color: var(--m-text-sub);
+    border-color: #D1D5DB;
+}
+.m-cust-btn.is-bulk-apply {
+    color: #fff;
+    background: var(--m-orange);
+    border-color: var(--m-orange);
+}
+.m-cust-btn.is-bulk-hold:hover { background: #F4F5F7; }
+.m-cust-btn:disabled {
+    background: #E5E7EB;
+    color: #9CA3AF;
+    border-color: #E5E7EB;
+    cursor: not-allowed;
+}
+
+/* 거래처 그룹 안의 카드(수요처)는 세로로 쌓이게 */
+.m-cust-group .m-rec-card {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #EEF1F5;
+    /* 좌측 컬러 라인은 inset shadow 로 유지 */
+}
+.m-cust-group .m-rec-card:last-child { border-bottom: none; }
+.m-cust-group .m-rec-card.is-p0 { box-shadow: inset 4px 0 0 var(--m-red); }
+.m-cust-group .m-rec-card.is-p1 { box-shadow: inset 4px 0 0 var(--m-orange); }
+.m-cust-group .m-rec-card.is-p2 { box-shadow: inset 4px 0 0 var(--m-blue); }
+.m-cust-group .m-rec-card.is-held { box-shadow: inset 4px 0 0 #9CA3AF; background: #F4F5F7; }
+.m-cust-group .m-rec-card.is-applied { box-shadow: inset 4px 0 0 #16A34A; background: #ECFDF3; }
+
+/* 추천 카드 메타 행: 수요처/탱크 정보 강조 */
+.m-cust-group .m-rec-meta { padding-top: 12px; }
+
+/* =========================================
+   AI 분석시간 스탬프 (ANALYZED_AT)
+========================================= */
+.m-ai-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.7);
+    color: var(--m-orange-dark);
+    border: 1px solid #FBD9A8;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+.m-ai-stamp .material-symbols-outlined {
+    font-size: 13px;
+}
+
+/* =========================================
+   배송요청시기 칩 (DLVY_REQUEST_ERA_CD)
+   01: 새벽 / 02: 오전 / 03: 월과중
+========================================= */
+.m-era-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 2px;
+    align-self: center;
+    width: max-content;
+    max-width: 100%;
+}
+.m-era-chip.is-dawn { background: #E0E7FF; color: #4338CA; border: 1px solid #C7D2FE; }
+.m-era-chip.is-am   { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+.m-era-chip.is-mid  { background: #FAE8FF; color: #86198F; border: 1px solid #F0ABFC; }
+
+/* =========================================
+   예측 종류 칩 (PREDICT_KND: 진행 / 실적)
+========================================= */
+.m-kind-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    line-height: 1.4;
+    margin-top: 2px;
+    align-self: center;
+    width: max-content;
+}
+.m-kind-tag.is-prog { background: #DBEAFE; color: #1E40AF; border: 1px solid #BFDBFE; }
+.m-kind-tag.is-real { background: #DEF7E9; color: #15803D; border: 1px solid #BBF7D0; }
+
+/* =========================================
+   탱크 코드 태그 (TANK_CD)
+========================================= */
+.m-tank-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    background: #E2E8F0;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 4px;
+    letter-spacing: 0.2px;
+}
+
+/* =========================================
+   비고 노트 (탱크 다중 매칭 / 동분류 거래 고정 등)
+========================================= */
+.m-rec-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 0 12px 8px 16px;
+    padding: 7px 10px;
+    background: #FEF9C3;
+    border: 1px solid #FDE68A;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #854D0E;
+    line-height: 1.45;
+}
+.m-rec-note .material-symbols-outlined {
+    font-size: 14px;
+    color: #B45309;
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+.m-rec-note strong { font-weight: 800; }
+.m-rec-note.is-fix {
+    background: #EDE9FE;
+    border-color: #DDD6FE;
+    color: #5B21B6;
+}
+.m-rec-note.is-fix .material-symbols-outlined { color: #7C3AED; }
+
+/* =========================================
+   추천 카드 - 그룹 안에서의 4-column 그리드 정렬
+   (m-table-head-rec 헤더와 동일 col 비율 사용)
+========================================= */
+.m-table-head.m-table-head-rec {
+    grid-template-columns: 1.05fr 0.85fr 1.05fr 60px;
+}
+/* 그룹 안 카드의 테이블 좌측 라인은 그룹의 좌측 라인이 대신함 */
+.m-cust-group .m-order-card.m-order-card-rec {
+    padding-left: 4px;
+}
+
+/* 카드 메타에서 수요처 명/탱크/코드 자연스러운 줄바꿈 */
+.m-rec-meta { row-gap: 4px; }
+.m-rec-meta .m-rec-name { font-size: 13px; }
+
+/* 셀 안에서 칩이 있는 경우 row-1 / 칩이 잘 보이도록 */
+.m-order-cell { gap: 3px; }

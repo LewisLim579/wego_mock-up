@@ -3,8 +3,11 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         initOrderActions();
+        initBulkActions();
         initHoldSheet();
         initTabs();
+        refreshAllGroupCounts();
+        refreshTabCounts();
     });
 
     // ---------- 토스트 ----------
@@ -50,6 +53,7 @@
         if (card.classList.contains('is-applied')) return;
         card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-p0', 'is-p1', 'is-p2', 'is-held');
         card.classList.add('is-applied');
+        refreshGroupCount(card);
 
         if (isRecCard(card)) {
             // 새 추천 카드: 메타 행의 우선순위/AI 태그 → 신청 완료 뱃지
@@ -102,6 +106,7 @@
     function holdCard(card, reasonText, days) {
         card.classList.remove('is-recommend-p0', 'is-recommend-p1', 'is-recommend-p2', 'is-p0', 'is-p1', 'is-p2', 'is-applied');
         card.classList.add('is-held');
+        refreshGroupCount(card);
 
         if (isRecCard(card)) {
             var meta = card.querySelector('.m-rec-meta');
@@ -276,6 +281,116 @@
             }
             c.style.display = show ? '' : 'none';
         });
+
+        // 거래처 그룹: 안에 보일 카드가 하나도 없으면 그룹 자체를 숨김
+        var groups = document.querySelectorAll('#orderList .m-cust-group');
+        groups.forEach(function (g) {
+            var visible = g.querySelectorAll('.m-rec-card:not([style*="display: none"]):not([style*="display:none"])');
+            g.style.display = visible.length ? '' : 'none';
+        });
+    }
+
+    // ---------- 거래처(CUS_CD) 단위 일괄 액션 ----------
+    function initBulkActions() {
+        var list = document.getElementById('orderList');
+        if (!list) return;
+
+        list.addEventListener('click', function (e) {
+            var btn = e.target.closest('.m-cust-btn');
+            if (!btn) return;
+            var group = btn.closest('.m-cust-group');
+            if (!group) return;
+
+            var action = btn.getAttribute('data-action');
+            var pendingCards = Array.prototype.slice.call(
+                group.querySelectorAll('.m-rec-card:not(.is-applied):not(.is-held)')
+            );
+            if (!pendingCards.length) {
+                showToast('처리할 추천이 없습니다');
+                return;
+            }
+
+            if (action === 'bulk-apply') {
+                pendingCards.forEach(function (c) { applyCard(c); });
+                showToast(pendingCards.length + '건 일괄 신청 완료');
+            } else if (action === 'bulk-hold') {
+                openHoldSheet(pendingCards);
+            }
+        });
+    }
+
+    // ---------- 거래처 그룹 헤더 카운트 갱신 ----------
+    function refreshGroupCount(card) {
+        var group = card.closest('.m-cust-group');
+        if (!group) return;
+
+        var totalCards = group.querySelectorAll('.m-rec-card');
+        var pendingCards = group.querySelectorAll('.m-rec-card:not(.is-applied):not(.is-held)');
+        var appliedCards = group.querySelectorAll('.m-rec-card.is-applied');
+        var heldCards = group.querySelectorAll('.m-rec-card.is-held');
+
+        var countEl = group.querySelector('.m-cust-count');
+        if (countEl) {
+            if (pendingCards.length === 0) {
+                countEl.innerText = '처리완료 ' + totalCards.length;
+                countEl.style.background = '#DEF7E9';
+                countEl.style.color = '#15803D';
+                countEl.style.borderColor = '#BBF7D0';
+            } else {
+                countEl.innerText = '대기 ' + pendingCards.length + ' / 총 ' + totalCards.length;
+            }
+        }
+
+        // 일괄 액션 버튼 비활성화
+        var bulkBtns = group.querySelectorAll('.m-cust-btn');
+        bulkBtns.forEach(function (b) {
+            b.disabled = pendingCards.length === 0;
+        });
+
+        // 갱신: 탭 카운트도 같이
+        refreshTabCounts();
+    }
+
+    function refreshAllGroupCounts() {
+        var groups = document.querySelectorAll('#orderList .m-cust-group');
+        groups.forEach(function (g) {
+            var any = g.querySelector('.m-rec-card');
+            if (any) refreshGroupCount(any);
+        });
+    }
+
+    // ---------- 탭(전체/긴급/주의/보류) 카운트 갱신 ----------
+    function refreshTabCounts() {
+        var all = document.querySelectorAll('#orderList .m-rec-card');
+        var p0 = 0, p1 = 0, p2 = 0, held = 0, applied = 0;
+        all.forEach(function (c) {
+            if (c.classList.contains('is-held')) { held++; return; }
+            if (c.classList.contains('is-applied')) { applied++; return; }
+            var prio = c.dataset.prio || '';
+            if (prio === 'p0') p0++;
+            else if (prio === 'p1') p1++;
+            else if (prio === 'p2') p2++;
+        });
+
+        var counts = { all: all.length, 'recommend-p0': p0, 'recommend-p1': p1, 'recommend-p2': p2, held: held };
+        document.querySelectorAll('.m-tab').forEach(function (t) {
+            var f = t.getAttribute('data-filter');
+            var cEl = t.querySelector('.m-tab-count');
+            if (cEl && counts[f] !== undefined) cEl.innerText = counts[f];
+        });
+
+        // 상단 AI 배너의 chip 갱신
+        var banner = document.querySelector('.m-ai-text strong');
+        if (banner) {
+            var groupCount = document.querySelectorAll('#orderList .m-cust-group').length;
+            banner.innerText = 'AI 추천 ' + all.length + '건 · 거래처 ' + groupCount + '사';
+        }
+        var chipP0 = document.querySelector('.m-ai-meta .m-chip-p0');
+        var chipP1 = document.querySelector('.m-ai-meta .m-chip-p1');
+        var chipP2 = document.querySelector('.m-ai-meta .m-chip-p2');
+        if (chipP0) chipP0.innerText = 'P0 긴급 ' + p0;
+        if (chipP1) chipP1.innerText = 'P1 주의 ' + p1;
+        if (chipP2) chipP2.innerText = 'P2 정상 ' + p2;
     }
 
 })();

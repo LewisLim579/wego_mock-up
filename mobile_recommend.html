@@ -20,40 +20,44 @@
             <a href="mobile.html" class="m-header-btn" aria-label="홈"><span class="material-symbols-outlined">home</span></a>
         </header>
 
-        <!-- AI 추천 요약 -->
+        <!-- AI 추천 요약 (거래처 / 수요처 / 분석시간) -->
         <div class="m-ai-banner">
             <div class="m-ai-icon"><span class="material-symbols-outlined">auto_awesome</span></div>
             <div class="m-ai-text">
-                <strong>오늘 AI 추천 4건</strong>
+                <strong>AI 추천 6건 · 거래처 3사</strong>
                 <div class="m-ai-meta">
                     <span class="m-chip m-chip-p0">P0 긴급 2</span>
-                    <span class="m-chip m-chip-p1">P1 주의 1</span>
-                    <span class="m-chip m-chip-p2">P2 정상 1</span>
+                    <span class="m-chip m-chip-p1">P1 주의 2</span>
+                    <span class="m-chip m-chip-p2">P2 정상 2</span>
                 </div>
+            </div>
+            <div class="m-ai-stamp" title="ANALYZED_AT">
+                <span class="material-symbols-outlined">schedule</span>
+                <span>09:30</span>
             </div>
         </div>
 
         <!-- TABS -->
         <div class="m-tabs">
-            <button class="m-tab is-active" data-filter="all">전체<span class="m-tab-count">4</span></button>
+            <button class="m-tab is-active" data-filter="all">전체<span class="m-tab-count">6</span></button>
             <button class="m-tab" data-filter="recommend-p0">긴급<span class="m-tab-count">2</span></button>
-            <button class="m-tab" data-filter="recommend-p1">주의<span class="m-tab-count">1</span></button>
+            <button class="m-tab" data-filter="recommend-p1">주의<span class="m-tab-count">2</span></button>
             <button class="m-tab" data-filter="held">보류<span class="m-tab-count">0</span></button>
         </div>
 
-        <!-- 컬럼 헤더 박스 (이미지 08 형식) -->
-        <div class="m-table-head">
+        <!-- 컬럼 헤더 (수요처 카드 4-column 그리드 정렬용) -->
+        <div class="m-table-head m-table-head-rec">
             <div class="m-th">
-                <span class="m-th-line">배송일</span>
-                <span class="m-th-line">차량번호</span>
+                <span class="m-th-line">추천주문일</span>
+                <span class="m-th-line">배송요청일</span>
             </div>
             <div class="m-th">
-                <span class="m-th-line">제품</span>
-                <span class="m-th-line">주문량</span>
+                <span class="m-th-line">예측주문량</span>
+                <span class="m-th-line">시기</span>
             </div>
             <div class="m-th">
-                <span class="m-th-line">출하장</span>
-                <span class="m-th-line">진행상태</span>
+                <span class="m-th-line">우선순위</span>
+                <span class="m-th-line">예측종류</span>
             </div>
             <div class="m-th">
                 <span class="m-th-line">작업</span>
@@ -61,132 +65,339 @@
             </div>
         </div>
 
-        <!-- ORDER CARD LIST (AI 추천만) -->
+        <!-- 거래처 그룹 LIST -->
         <div class="m-list" id="orderList">
 
-            <div class="m-rec-card is-p0" data-customer="(유)신안물산" data-code="0038292069" data-amount="4,900" data-prio="p0">
-                <div class="m-rec-meta">
-                    <span class="m-prio-badge is-p0">P0 긴급</span>
-                    <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-rec-name">(유)신안물산</span>
-                    <span class="m-rec-code">코드 0038292069</span>
-                </div>
-                <div class="m-order-card m-order-card-rec">
-                    <div class="m-order-cell">
-                        <span class="row-1">2026-04-29</span>
-                        <span class="row-2 is-mute">미배차</span>
+            <!-- ============================================================ -->
+            <!-- 거래처 #1 : (유)신안물산 -->
+            <!-- ============================================================ -->
+            <section class="m-cust-group" data-cus-cd="0001000106" data-cus-name="(유)신안물산">
+                <header class="m-cust-head">
+                    <div class="m-cust-icon"><span class="material-symbols-outlined">apartment</span></div>
+                    <div class="m-cust-info">
+                        <div class="m-cust-name">(유)신안물산</div>
+                        <div class="m-cust-meta">
+                            <span>거래처 0001000106</span>
+                            <span class="m-cust-dot">·</span>
+                            <span>요청일 2026-04-29</span>
+                        </div>
                     </div>
-                    <div class="m-order-cell">
-                        <span class="strong">프로판</span>
-                        <span class="num">4,900</span>
-                    </div>
-                    <div class="m-order-cell">
-                        <span class="row-1">평택기지</span>
-                        <span class="state-red">P0 긴급</span>
-                    </div>
-                    <div class="m-rec-action-cell">
-                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
-                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
-                    </div>
-                </div>
-                <div class="m-rec-msg">
-                    <span class="material-symbols-outlined">priority_high</span>
-                    긴급 잔량 부족 · 즉시 출고 권장
-                </div>
-            </div>
+                    <span class="m-cust-count" data-role="count">수요처 2</span>
+                </header>
 
-            <div class="m-rec-card is-p0" data-customer="해초원/딥앤씨푸드" data-code="0038292070" data-amount="2,900" data-prio="p0">
-                <div class="m-rec-meta">
-                    <span class="m-prio-badge is-p0">P0 긴급</span>
-                    <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-rec-name">해초원 / 딥앤씨푸드</span>
-                    <span class="m-rec-code">코드 0038292070</span>
+                <div class="m-cust-actions">
+                    <button class="m-cust-btn is-bulk-hold" data-action="bulk-hold">
+                        <span class="material-symbols-outlined">pause_circle</span>
+                        모두 보류
+                    </button>
+                    <button class="m-cust-btn is-bulk-apply" data-action="bulk-apply">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        모두 신청
+                    </button>
                 </div>
-                <div class="m-order-card m-order-card-rec">
-                    <div class="m-order-cell">
-                        <span class="row-1">2026-04-29</span>
-                        <span class="row-2 is-mute">미배차</span>
-                    </div>
-                    <div class="m-order-cell">
-                        <span class="strong">프로판</span>
-                        <span class="num">2,900</span>
-                    </div>
-                    <div class="m-order-cell">
-                        <span class="row-1">평택기지</span>
-                        <span class="state-red">P0 긴급</span>
-                    </div>
-                    <div class="m-rec-action-cell">
-                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
-                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
-                    </div>
-                </div>
-                <div class="m-rec-msg">
-                    <span class="material-symbols-outlined">priority_high</span>
-                    리드타임 내 안전재고 미달
-                </div>
-            </div>
 
-            <div class="m-rec-card is-p1" data-customer="대의영어조합법인" data-code="1000028303" data-amount="2,900" data-prio="p1">
-                <div class="m-rec-meta">
-                    <span class="m-prio-badge is-p1">P1 주의</span>
-                    <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-rec-name">대의영어조합법인</span>
-                    <span class="m-rec-code">코드 1000028303</span>
-                </div>
-                <div class="m-order-card m-order-card-rec">
-                    <div class="m-order-cell">
-                        <span class="row-1">2026-04-29</span>
-                        <span class="row-2 is-mute">미배차</span>
+                <!-- 수요처 #1-1 -->
+                <article class="m-rec-card is-p0"
+                         data-customer="(유)신안물산 · 본사창고"
+                         data-cus-cd="0001000106"
+                         data-enduser-cd="E000010601"
+                         data-tank-cd="TNK-AB-001"
+                         data-analysis-id="9f1e8d6a-0001"
+                         data-amount="4,900"
+                         data-prio="p0">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p0">P0 긴급</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">본사창고</span>
+                        <span class="m-tank-tag">탱크 TNK-AB-001</span>
+                        <span class="m-rec-code">수요처 E000010601</span>
                     </div>
-                    <div class="m-order-cell">
-                        <span class="strong">프로판</span>
-                        <span class="num">2,900</span>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">04-29 (수)</span>
+                            <span class="row-2">04-30 (목)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">4,900</span>
+                            <span class="m-era-chip is-dawn" title="DLVY_REQUEST_ERA_CD=01">새벽</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-red">P0 긴급</span>
+                            <span class="m-kind-tag is-prog">진행</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
                     </div>
-                    <div class="m-order-cell">
-                        <span class="row-1">평택기지</span>
-                        <span class="state-orange">P1 주의</span>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">priority_high</span>
+                        잔량 18% · 안전재고 미달, 즉시 출고 권장
                     </div>
-                    <div class="m-rec-action-cell">
-                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
-                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
-                    </div>
-                </div>
-                <div class="m-rec-msg">
-                    <span class="material-symbols-outlined">trending_down</span>
-                    잔량 30% 이하 도달 예정
-                </div>
-            </div>
+                </article>
 
-            <div class="m-rec-card is-p2" data-customer="매종클래스 공동주택" data-code="1000022954" data-amount="2,000" data-prio="p2">
-                <div class="m-rec-meta">
-                    <span class="m-prio-badge is-p2">P2 정상</span>
-                    <span class="m-ai-tag">AI 추천</span>
-                    <span class="m-rec-name">매종클래스 공동주택 (충남충전소)</span>
-                    <span class="m-rec-code">코드 1000022954</span>
+                <!-- 수요처 #1-2 -->
+                <article class="m-rec-card is-p1"
+                         data-customer="(유)신안물산 · 2공장"
+                         data-cus-cd="0001000106"
+                         data-enduser-cd="E000010602"
+                         data-tank-cd="TNK-AB-002"
+                         data-analysis-id="9f1e8d6a-0002"
+                         data-amount="2,100"
+                         data-prio="p1">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p1">P1 주의</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">2공장</span>
+                        <span class="m-tank-tag">탱크 TNK-AB-002</span>
+                        <span class="m-rec-code">수요처 E000010602</span>
+                    </div>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">04-30 (목)</span>
+                            <span class="row-2">05-01 (금)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">2,100</span>
+                            <span class="m-era-chip is-am" title="DLVY_REQUEST_ERA_CD=02">오전</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-orange">P1 주의</span>
+                            <span class="m-kind-tag is-prog">진행</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
+                    </div>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">trending_down</span>
+                        잔량 28% 도달 예정 · 통상 주기 도래
+                    </div>
+                </article>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 거래처 #2 : 해초원 / 딥앤씨푸드 -->
+            <!-- ============================================================ -->
+            <section class="m-cust-group" data-cus-cd="0038292070" data-cus-name="해초원/딥앤씨푸드">
+                <header class="m-cust-head">
+                    <div class="m-cust-icon"><span class="material-symbols-outlined">store</span></div>
+                    <div class="m-cust-info">
+                        <div class="m-cust-name">해초원 / 딥앤씨푸드</div>
+                        <div class="m-cust-meta">
+                            <span>거래처 0038292070</span>
+                            <span class="m-cust-dot">·</span>
+                            <span>요청일 2026-04-29</span>
+                        </div>
+                    </div>
+                    <span class="m-cust-count" data-role="count">수요처 1</span>
+                </header>
+
+                <div class="m-cust-actions">
+                    <button class="m-cust-btn is-bulk-hold" data-action="bulk-hold">
+                        <span class="material-symbols-outlined">pause_circle</span>
+                        모두 보류
+                    </button>
+                    <button class="m-cust-btn is-bulk-apply" data-action="bulk-apply">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        모두 신청
+                    </button>
                 </div>
-                <div class="m-order-card m-order-card-rec">
-                    <div class="m-order-cell">
-                        <span class="row-1">2026-04-29</span>
-                        <span class="row-2 is-mute">미배차</span>
+
+                <article class="m-rec-card is-p0"
+                         data-customer="해초원/딥앤씨푸드 · 1공장"
+                         data-cus-cd="0038292070"
+                         data-enduser-cd="E003829201"
+                         data-tank-cd="TNK-HC-001"
+                         data-analysis-id="9f1e8d6a-0003"
+                         data-amount="2,900"
+                         data-prio="p0">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p0">P0 긴급</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">1공장</span>
+                        <span class="m-tank-tag">탱크 TNK-HC-001</span>
+                        <span class="m-rec-code">수요처 E003829201</span>
                     </div>
-                    <div class="m-order-cell">
-                        <span class="strong">프로판</span>
-                        <span class="num">2,000</span>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">04-29 (수)</span>
+                            <span class="row-2">04-29 (수)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">2,900</span>
+                            <span class="m-era-chip is-dawn" title="DLVY_REQUEST_ERA_CD=01">새벽</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-red">P0 긴급</span>
+                            <span class="m-kind-tag is-prog">진행</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
                     </div>
-                    <div class="m-order-cell">
-                        <span class="row-1">평택기지</span>
-                        <span class="state-blue">P2 정상</span>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">priority_high</span>
+                        리드타임 내 안전재고 미달
                     </div>
-                    <div class="m-rec-action-cell">
-                        <button class="m-rec-btn is-hold" data-action="hold">보류</button>
-                        <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                </article>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 거래처 #3 : 매종클래스 공동주택 -->
+            <!-- ============================================================ -->
+            <section class="m-cust-group" data-cus-cd="1000022954" data-cus-name="매종클래스 공동주택">
+                <header class="m-cust-head">
+                    <div class="m-cust-icon"><span class="material-symbols-outlined">domain</span></div>
+                    <div class="m-cust-info">
+                        <div class="m-cust-name">매종클래스 공동주택</div>
+                        <div class="m-cust-meta">
+                            <span>거래처 1000022954</span>
+                            <span class="m-cust-dot">·</span>
+                            <span>요청일 2026-04-29</span>
+                        </div>
                     </div>
+                    <span class="m-cust-count" data-role="count">수요처 2</span>
+                </header>
+
+                <div class="m-cust-actions">
+                    <button class="m-cust-btn is-bulk-hold" data-action="bulk-hold">
+                        <span class="material-symbols-outlined">pause_circle</span>
+                        모두 보류
+                    </button>
+                    <button class="m-cust-btn is-bulk-apply" data-action="bulk-apply">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        모두 신청
+                    </button>
                 </div>
-                <div class="m-rec-msg">
-                    <span class="material-symbols-outlined">schedule</span>
-                    통상 주문 주기 도래
-                </div>
-            </div>
+
+                <article class="m-rec-card is-p1"
+                         data-customer="매종클래스 · 충남충전소 1호기"
+                         data-cus-cd="1000022954"
+                         data-enduser-cd="E100002201"
+                         data-tank-cd="TNK-MJ-001"
+                         data-analysis-id="9f1e8d6a-0004"
+                         data-amount="2,000"
+                         data-prio="p1">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p1">P1 주의</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">충남충전소 1호기</span>
+                        <span class="m-tank-tag">탱크 TNK-MJ-001</span>
+                        <span class="m-rec-code">수요처 E100002201</span>
+                    </div>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">04-30 (목)</span>
+                            <span class="row-2">05-01 (금)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">2,000</span>
+                            <span class="m-era-chip is-am" title="DLVY_REQUEST_ERA_CD=02">오전</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-orange">P1 주의</span>
+                            <span class="m-kind-tag is-real">실적</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
+                    </div>
+                    <div class="m-rec-note">
+                        <span class="material-symbols-outlined">info</span>
+                        <span><strong>비고 01</strong> · 동일 수요처에 탱크가 2개 이상 매칭되어 신규 매칭 검토 중</span>
+                    </div>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">schedule</span>
+                        실적 기반 주기 도래
+                    </div>
+                </article>
+
+                <article class="m-rec-card is-p2"
+                         data-customer="매종클래스 · 충남충전소 2호기"
+                         data-cus-cd="1000022954"
+                         data-enduser-cd="E100002202"
+                         data-tank-cd="TNK-MJ-002"
+                         data-analysis-id="9f1e8d6a-0005"
+                         data-amount="1,500"
+                         data-prio="p2">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p2">P2 정상</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">충남충전소 2호기</span>
+                        <span class="m-tank-tag">탱크 TNK-MJ-002</span>
+                        <span class="m-rec-code">수요처 E100002202</span>
+                    </div>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">05-01 (금)</span>
+                            <span class="row-2">05-02 (토)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">1,500</span>
+                            <span class="m-era-chip is-mid" title="DLVY_REQUEST_ERA_CD=03">월과중</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-blue">P2 정상</span>
+                            <span class="m-kind-tag is-prog">진행</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
+                    </div>
+                    <div class="m-rec-note is-fix">
+                        <span class="material-symbols-outlined">push_pin</span>
+                        <span><strong>비고 03</strong> · 동분류 거래 고정 (탱크-품목 신규 매칭중)</span>
+                    </div>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">schedule</span>
+                        통상 주문 주기 도래
+                    </div>
+                </article>
+
+                <article class="m-rec-card is-p2"
+                         data-customer="매종클래스 · 충남충전소 3호기"
+                         data-cus-cd="1000022954"
+                         data-enduser-cd="E100002203"
+                         data-tank-cd="TNK-MJ-003"
+                         data-analysis-id="9f1e8d6a-0006"
+                         data-amount="1,200"
+                         data-prio="p2">
+                    <div class="m-rec-meta">
+                        <span class="m-prio-badge is-p2">P2 정상</span>
+                        <span class="m-ai-tag">AI</span>
+                        <span class="m-rec-name">충남충전소 3호기</span>
+                        <span class="m-tank-tag">탱크 TNK-MJ-003</span>
+                        <span class="m-rec-code">수요처 E100002203</span>
+                    </div>
+                    <div class="m-order-card m-order-card-rec">
+                        <div class="m-order-cell">
+                            <span class="row-1">05-02 (토)</span>
+                            <span class="row-2">05-03 (일)</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="num">1,200</span>
+                            <span class="m-era-chip is-am" title="DLVY_REQUEST_ERA_CD=02">오전</span>
+                        </div>
+                        <div class="m-order-cell">
+                            <span class="state-blue">P2 정상</span>
+                            <span class="m-kind-tag is-real">실적</span>
+                        </div>
+                        <div class="m-rec-action-cell">
+                            <button class="m-rec-btn is-hold" data-action="hold">보류</button>
+                            <button class="m-rec-btn is-apply" data-action="apply">신청</button>
+                        </div>
+                    </div>
+                    <div class="m-rec-msg">
+                        <span class="material-symbols-outlined">schedule</span>
+                        실적 기반 주기 도래
+                    </div>
+                </article>
+            </section>
 
         </div>
 
